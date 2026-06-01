@@ -334,6 +334,37 @@
       .sat-modal-close { position: absolute; right: 20px; top: 18px; z-index: 102; border: none; border-radius: 9px; background: rgba(255,255,255,0.95); color: var(--ink); cursor: pointer; font: 800 14px Pretendard, sans-serif; padding: 9px 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
       .sat-modal-label { position: absolute; left: 20px; top: 18px; z-index: 102; border-radius: 10px; background: rgba(255,255,255,0.95); padding: 10px 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.35); font: 850 18px Pretendard, sans-serif; color: var(--ink); }
       .sat-modal-label small { display: block; margin-top: 3px; font-weight: 700; font-size: 13px; color: var(--green); }
+      .parcel-image-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
+      .parcel-image-card { position: relative; height: 205px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: #101412; box-shadow: 0 10px 24px rgba(20,34,31,0.12); }
+      .parcel-image-card { cursor: zoom-in; }
+      .parcel-image-card::after { content: "크게 보기"; position: absolute; right: 10px; top: 10px; padding: 5px 8px; border-radius: 999px; background: rgba(255,255,255,0.92); color: var(--ink); font-size: 11px; font-weight: 850; opacity: 0; transform: translateY(-4px); transition: 0.18s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.18); }
+      .parcel-image-card:hover::after { opacity: 1; transform: translateY(0); }
+      .parcel-image-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .parcel-image-card .pic-label { position: absolute; left: 10px; right: 10px; bottom: 10px; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.92); box-shadow: 0 6px 16px rgba(0,0,0,0.22); color: var(--ink); font-size: 12px; line-height: 1.35; }
+      .parcel-image-card .pic-label b { display: block; font-size: 13px; }
+      .parcel-image-card .pic-label span { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+      .overview-hero { position: relative; height: calc(100vh - 190px); min-height: 520px; margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #eef3f1; box-shadow: var(--shadow); }
+      .overview-hero { cursor: zoom-in; }
+      .overview-hero::after { content: "조감도·전체 영상 보기"; position: absolute; right: 18px; top: 18px; padding: 7px 11px; border-radius: 999px; background: rgba(255,255,255,0.94); color: var(--ink); font-size: 12px; font-weight: 850; box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+      .overview-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .overview-hero .missing-note { position: absolute; inset: 0; display: none; place-items: center; padding: 30px; text-align: center; color: #5f6e69; font-weight: 800; line-height: 1.6; background: linear-gradient(135deg, #f7faf8, #e9f0ed); }
+      .overview-hero .overview-caption { position: absolute; left: 18px; bottom: 18px; width: min(620px, calc(100% - 36px)); padding: 14px 16px; border-radius: 11px; background: rgba(255,255,255,0.94); box-shadow: 0 12px 28px rgba(20,34,31,0.18); color: var(--ink); font-size: 13.5px; line-height: 1.55; }
+      .overview-hero .overview-caption b { color: var(--green); }
+      .media-modal { position: fixed; inset: 0; z-index: 110; display: none; padding: 72px 34px 30px; background: rgba(8,12,11,0.94); }
+      .media-modal.open { display: grid; grid-template-rows: auto 1fr; gap: 14px; }
+      .media-modal-close { position: absolute; right: 22px; top: 18px; z-index: 112; border: none; border-radius: 9px; background: rgba(255,255,255,0.95); color: var(--ink); cursor: pointer; font: 800 14px Pretendard, sans-serif; padding: 9px 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.35); }
+      .media-modal-title { position: absolute; left: 26px; top: 18px; z-index: 112; max-width: calc(100vw - 190px); border-radius: 10px; background: rgba(255,255,255,0.95); padding: 10px 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.35); font: 850 18px Pretendard, sans-serif; color: var(--ink); }
+      .media-modal-title small { display: block; margin-top: 3px; font-weight: 700; font-size: 12.5px; color: var(--green); }
+      .media-modal-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 0.85fr); gap: 16px; min-height: 0; }
+      .media-modal-image, .media-modal-video { min-height: 0; border: 1px solid rgba(255,255,255,0.18); border-radius: 14px; overflow: hidden; background: #000; box-shadow: 0 20px 44px rgba(0,0,0,0.35); }
+      .media-modal-image img { width: 100%; height: 100%; max-height: calc(100vh - 130px); object-fit: contain; display: block; background: #000; }
+      .media-modal-video { display: flex; align-items: center; justify-content: center; }
+      .media-modal-video video { width: 100%; height: 100%; max-height: calc(100vh - 130px); object-fit: contain; background: #000; }
+      .media-modal-video.empty { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.72); font-weight: 800; font-size: 15px; text-align: center; padding: 20px; }
+      @media (max-width: 1100px) { .media-modal-body { grid-template-columns: 1fr; overflow: auto; } .media-modal-image img, .media-modal-video video { max-height: 52vh; } }
+      .video-frame { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #0b0f0e; box-shadow: var(--shadow); }
+      .video-frame video { display: block; width: 100%; max-height: 390px; background: #000; }
+      @media (max-width: 900px) { .parcel-image-grid { grid-template-columns: 1fr; } }
 
       /* ===== 컨셉: 여섯 개의 점, 하나의 캠퍼스 ===== */
       .concept-hero { display: grid; grid-template-columns: 150px 1fr; gap: 26px; align-items: center; margin-top: 20px; padding: 22px 24px; border-radius: 16px; background: linear-gradient(120deg, #0f4d3d, #20735b); color: #fff; max-width: 1040px; }
@@ -742,104 +773,6 @@
         </div>
       </section>
 
-      <!-- 11. WEIGHTS -->
-      <section class="slide">
-        <div class="slide-inner">
-          <div class="kicker">승(承) · 가중치 산정 (AHP)</div>
-          <h2>가중치는 “임의”가 아니라 전문가 패널 AHP로 “도출”했다</h2>
-          <div class="grid-2">
-            <div class="card">
-              <strong>AHP 도출 가중치 (가상 전문가 6인 쌍대비교)</strong>
-              <div class="wlist">
-                <div class="wrow"><div class="wtop"><b>① 60세+ 거주 밀집도</b><em>26.0% → 25점</em></div><div class="wbar"><i style="width:100%"></i></div></div>
-                <div class="wrow"><div class="wtop"><b>② 도심 상권 연계</b><em>22.7% → 23점</em></div><div class="wbar"><i style="width:87%"></i></div></div>
-                <div class="wrow"><div class="wtop"><b>④ 실내체육 공급 공백</b><em>14.7% → 15점</em></div><div class="wbar"><i style="width:57%"></i></div></div>
-                <div class="wrow"><div class="wtop"><b>③ 보행 평지·대중교통</b><em>13.3% → 13점</em></div><div class="wbar"><i style="width:51%"></i></div></div>
-                <div class="wrow"><div class="wtop"><b>⑥ 소비 유출 차단</b><em>9.7% → 10점</em></div><div class="wbar"><i style="width:37%"></i></div></div>
-                <div class="wrow"><div class="wtop"><b>⑤ 의료·재활 연계</b><em>8.8% → 9점</em></div><div class="wbar"><i style="width:34%"></i></div></div>
-                <div class="wrow"><div class="wtop"><b>⑦ 대형 부지 확보</b><em>4.8% → 5점·하드 제약</em></div><div class="wbar"><i class="two" style="width:19%"></i></div></div>
-              </div>
-              <p class="section-note" style="margin-top:10px;">일관성비율 <b>CR = 0.0105 &lt; 0.10</b> → 판단 논리 일관성 충족(λmax 7.08).</p>
-            </div>
-            <div>
-              <div class="card info">
-                <strong>방법 — AHP (Saaty)</strong>
-                <p style="color:var(--ink);font-size:13.5px;">6인 전문가 페르소나(도시계획·체육진흥·노인복지·관광경제·재정투자·주민대표)가 지표를 <b>둘씩 비교(1~9 척도)</b> → 고유벡터로 가중치 도출 → <b>CR</b>로 일관성 검증.</p>
-              </div>
-              <div class="card success" style="margin-top:12px;">
-                <strong>결과 — 직관을 검증 + 보정</strong>
-                <p style="color:var(--ink);font-size:13.5px;">상권연계가 22.7%로 두 번째다. 동해 유출 차단은 “상권 동선 안에서 붙잡는 것”이므로, 도심 상권과의 결합이 단순 편의시설보다 중요한 입지조건으로 보정됐다.</p>
-              </div>
-              <div class="card warning" style="margin-top:12px;">
-                <strong>정직성</strong>
-                <p style="color:var(--ink);font-size:12.5px;">AI 구성 <b>가상 전문가 패널 시뮬레이션</b>이며, 실제 채택 전 현장 전문가 AHP 설문으로 검증 필요.</p>
-              </div>
-            </div>
-          </div>
-          <div class="source">출처: AHP(Saaty) 쌍대비교 — 가상 전문가 6인 패널(기하평균 집계). 고유벡터 원값 26.0/22.7/13.3/14.7/8.8/9.7/4.8%, 발표용 배점 25/23/13/15/9/10/5점. CR 0.0105.</div>
-          <div class="phase">승 · METHOD</div>
-          <div class="slide-no"></div>
-        </div>
-      </section>
-
-      <!-- 11B. AHP CALCULATION -->
-      <section class="slide">
-        <div class="slide-inner">
-          <div class="kicker">승(承) · AHP 계산 검증</div>
-          <h2>전문가 페르소나는 “누가 어떤 관점으로 판단했는가”를 남기기 위한 장치다</h2>
-          <div class="grid-2">
-            <div class="card">
-              <strong>가상 6인 패널과 판단 기준</strong>
-              <div class="table-wrap" style="margin-top:10px;">
-                <table>
-                  <thead><tr><th>패널</th><th>중시 관점</th><th>결정에 준 영향</th></tr></thead>
-                  <tbody>
-                    <tr><td>도시계획·재생</td><td>중심성·토지이용</td><td>도심 상권·대형부지 동시 검토</td></tr>
-                    <tr><td>체육진흥</td><td>생활체육 공급공백</td><td>헬스·GX·실내구기 보강</td></tr>
-                    <tr><td>노인복지·보건</td><td>5060·의료 접근</td><td>재활·웰니스·보행권 중시</td></tr>
-                    <tr><td>관광경제</td><td>소비유출·숙박</td><td>동해 유출 회수, 정하동 체류·확장 거점</td></tr>
-                    <tr><td>재정·투자</td><td>지가·사업성</td><td>도심 고지가 대면적 매입 배제</td></tr>
-                    <tr><td>주민대표</td><td>개방성·접근성</td><td>남양·정상권 도심 접점 유지</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="card">
-              <strong>쌍대비교 행렬 → 고유벡터 → 일관성 검증</strong>
-              <div class="table-wrap" style="margin-top:10px;">
-                <table style="font-size:11px;">
-                  <thead><tr><th></th><th>①</th><th>②</th><th>③</th><th>④</th><th>⑤</th><th>⑥</th><th>⑦</th></tr></thead>
-                  <tbody>
-                    <tr><td>①60+</td><td>1</td><td>1</td><td>2</td><td>2</td><td>3</td><td>3</td><td>5</td></tr>
-                    <tr><td>②상권</td><td>1</td><td>1</td><td>2</td><td>2</td><td>2</td><td>2</td><td>4</td></tr>
-                    <tr><td>③교통</td><td>1/2</td><td>1/2</td><td>1</td><td>1</td><td>2</td><td>1</td><td>3</td></tr>
-                    <tr><td>④공백</td><td>1/2</td><td>1/2</td><td>1</td><td>1</td><td>2</td><td>2</td><td>3</td></tr>
-                    <tr><td>⑤의료</td><td>1/3</td><td>1/2</td><td>1/2</td><td>1/2</td><td>1</td><td>1</td><td>2</td></tr>
-                    <tr><td>⑥유출</td><td>1/3</td><td>1/2</td><td>1</td><td>1/2</td><td>1</td><td>1</td><td>2</td></tr>
-                    <tr><td>⑦부지</td><td>1/5</td><td>1/4</td><td>1/3</td><td>1/3</td><td>1/2</td><td>1/2</td><td>1</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="section-note">
-                계산값: λmax=7.0836, CI=(λmax-n)/(n-1)=0.01394, RI(7)=1.32,
-                <b>CR=0.01056</b>. CR이 0.10보다 훨씬 낮아 쌍대비교 판단의 일관성이 충분하다고 본다.
-              </p>
-            </div>
-          </div>
-          <div class="card info" style="margin-top:16px;">
-            <strong>왜 7개 가중치와 4개 지도지표가 다른가</strong>
-            <p style="color:var(--ink);font-size:14px;">
-              AHP는 미션1 전체 의사결정의 7개 기준이다. 그중 좌표화 가능한 상권·도심중심성·의료·체육시설 분포 4개는 100m 격자 지도에 반영했다.
-              60세+ 거주밀도와 보행·대중교통은 행정동·도로 조건으로 해석했고, 대형부지는 점수로 섞지 않고 <b>2차 하드 필터</b>로 적용했다.
-              이렇게 분리해야 “수요가 높은 곳”과 “산업단지를 지을 수 있는 곳”을 섞어버리지 않는다.
-            </p>
-          </div>
-          <div class="source">출처: `지표.md` AHP 지표체계, 직접 계산한 고유벡터·일관성비율, `grid_scores_100m.geojson` 좌표화 가능 지표.</div>
-          <div class="phase">승 · METHOD</div>
-          <div class="slide-no"></div>
-        </div>
-      </section>
-
       <!-- 11C. PERSONA TRAINING -->
       <section class="slide">
         <div class="slide-inner">
@@ -895,48 +828,94 @@
         </div>
       </section>
 
-      <!-- 12. MAP DASHBOARD -->
-      <section class="slide full">
-        <div class="map-layout">
-          <aside class="dash-panel">
-            <div class="kicker">전(轉) · 전역 평가 결과</div>
-            <h2>1차 상대밀도 피크는 남양·정상 도심권이다</h2>
-            <p class="small">지도는 5,600개 격자 점수를 <b>상대밀도</b>로 정규화한 히트맵·등고선이다. 최저~최고를 0~1로 환산해 <b>가장 붉은 곳이 곧 최고 수요권</b>이 되도록 했다. 붉고 등고선이 촘촘할수록 상권·의료·도심 접근이 겹친 생활체육 수요가 강하다.</p>
-            <div class="dash-metrics">
-              <div class="dash-metric"><span>평가 격자</span><b>5,600</b></div>
-              <div class="dash-metric"><span>점수 범위</span><b>25.5–72.7</b></div>
-              <div class="dash-metric"><span>최고점 권역</span><b>남양·정상권</b></div>
+      <!-- 11. WEIGHTS -->
+      <section class="slide">
+        <div class="slide-inner">
+          <div class="kicker">승(承) · 가중치 산정 (AHP)</div>
+          <h2>가중치는 “임의”가 아니라 전문가 패널 AHP로 “도출”했다</h2>
+          <div class="grid-2">
+            <div class="card">
+              <strong>AHP 도출 가중치 (가상 전문가 6인 쌍대비교)</strong>
+              <div class="wlist">
+                <div class="wrow"><div class="wtop"><b>① 60세+ 거주 밀집도</b><em>26.0% → 25점</em></div><div class="wbar"><i style="width:100%"></i></div></div>
+                <div class="wrow"><div class="wtop"><b>② 도심 상권 연계</b><em>22.7% → 23점</em></div><div class="wbar"><i style="width:87%"></i></div></div>
+                <div class="wrow"><div class="wtop"><b>④ 실내체육 공급 공백</b><em>14.7% → 15점</em></div><div class="wbar"><i style="width:57%"></i></div></div>
+                <div class="wrow"><div class="wtop"><b>③ 보행 평지·대중교통</b><em>13.3% → 13점</em></div><div class="wbar"><i style="width:51%"></i></div></div>
+                <div class="wrow"><div class="wtop"><b>⑥ 소비 유출 차단</b><em>9.7% → 10점</em></div><div class="wbar"><i style="width:37%"></i></div></div>
+                <div class="wrow"><div class="wtop"><b>⑤ 의료·재활 연계</b><em>8.8% → 9점</em></div><div class="wbar"><i style="width:34%"></i></div></div>
+                <div class="wrow"><div class="wtop"><b>⑦ 대형 부지 확보</b><em>4.8% → 5점·하드 제약</em></div><div class="wbar"><i class="two" style="width:19%"></i></div></div>
+              </div>
+              <p class="section-note" style="margin-top:10px;">일관성비율 <b>CR = 0.0105 &lt; 0.10</b> → 판단 논리 일관성 충족(λmax 7.08).</p>
             </div>
-            <div class="card" style="padding:12px;margin:0 0 12px;">
-              <strong style="font-size:13px;margin-bottom:6px;">지도 읽는 순서</strong>
-              <p style="font-size:12px;color:var(--muted);line-height:1.5;">① 가장 붉은 등고밀도 피크에서 최고점 권역을 찾고<br>② 65점 이상 고득점이 연결되는 면을 확인한 뒤<br>③ 이후 단계에서만 필지 단위 육각평가로 넘어간다.</p>
+            <div>
+              <div class="card info">
+                <strong>방법 — AHP (Saaty)</strong>
+                <p style="color:var(--ink);font-size:13.5px;">6인 전문가 페르소나(도시계획·체육진흥·노인복지·관광경제·재정투자·주민대표)가 지표를 <b>둘씩 비교(1~9 척도)</b> → 고유벡터로 가중치 도출 → <b>CR</b>로 일관성 검증.</p>
+              </div>
+              <div class="card success" style="margin-top:12px;">
+                <strong>결과 — 직관을 검증 + 보정</strong>
+                <p style="color:var(--ink);font-size:13.5px;">상권연계가 22.7%로 두 번째다. 동해 유출 차단은 “상권 동선 안에서 붙잡는 것”이므로, 도심 상권과의 결합이 단순 편의시설보다 중요한 입지조건으로 보정됐다.</p>
+              </div>
+              <div class="card warning" style="margin-top:12px;">
+                <strong>정직성</strong>
+                <p style="color:var(--ink);font-size:12.5px;">AI 구성 <b>가상 전문가 패널 시뮬레이션</b>이며, 실제 채택 전 현장 전문가 AHP 설문으로 검증 필요.</p>
+              </div>
             </div>
-            <div class="candidate-table">
-              <table>
-                <thead><tr><th>순위</th><th>권역</th><th>실제 점수</th><th>판정</th></tr></thead>
-                <tbody>
-                  <tr><td><span class="rank">1</span></td><td>남양·정상 도심피크</td><td>72.7</td><td>1등 대상권역</td></tr>
-                  <tr><td><span class="rank two">2</span></td><td>마달동 북서 고득점권</td><td>67.3</td><td>2등 대상권역</td></tr>
-                  <tr><td><span class="rank three">3</span></td><td>정하동 동부 고득점권</td><td>67.3</td><td>3등 대상권역</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="small">핵심 ▸ 전역평가 지도에서는 필지를 표시하지 않는다. 이 단계의 결론은 오직 “어느 권역의 수요 밀도가 높은가”이며, 필지 선택은 다음 육각평가에서 별도로 수행한다.</p>
-            <div class="card warning" style="padding:12px;margin:12px 0 0;">
-              <strong style="font-size:13px;">“시설(빨간 점)이 많은데 왜 1등?”</strong>
-              <p style="font-size:12px;color:var(--ink);line-height:1.5;">남양·정상권은 <b>빈 곳이라서가 아니라</b> 상권·의료·도심이 가장 진하게 겹친 <b>수요 중심</b>이라 1등이다. 점수도 상권 20 + 도심 10 + 의료 10 + <b>체육공백 0</b>(이미 시설 많음) = 만점 가까이. 즉 “시설이 없어서”가 아니라 <b>“수요가 가장 많아서”</b>다. 빨간 점들은 대부분 작은 헬스·태권도라 <b>아레나·수영·재활 같은 복합 수요는 못 잡아</b> 동해로 샌다 → 복합단지로 회수.</p>
-            </div>
-            <div class="source">출처: `heatmap_grid_100m.geojson`(고득점만 저투명도), `isolines_100m_dense.geojson`(등고선 3배 밀도), `grid_scores_100m.geojson`, `buildings.geojson`, `sports_points.geojson`(122, 빨간 점=명칭 라벨), `medical_points.geojson`(73, 파란 점).</div>
-          </aside>
-          <div style="position: relative; min-width: 0;">
-            <div id="map"></div>
-            <div class="legend">
-              <div class="legend-gradient"></div>
-              <div class="legend-labels"><span>0.0 낮음</span><span>상대밀도</span><span>1.0 피크</span></div>
-              <p style="margin-top:10px;color:var(--muted);font-size:12px;line-height:1.45;">빨간 점: 기존 스포츠시설 · 파란 점: 의료시설 · 원형 경계: 1·2·3등 권역. 필지는 이 전역평가 지도에 표시하지 않는다.</p>
-            </div>
-            <div class="map-caption"><b>1차 결론:</b> 상대밀도 분석의 최고점은 남양·정상 도심피크(72.7점)다. 이후 검토에서는 이 고득점 권역 안에서 필지 면적·용도·지가를 확인해 실제 후보지를 고른다.</div>
           </div>
+          <div class="source">출처: AHP(Saaty) 쌍대비교 — 가상 전문가 6인 패널(기하평균 집계). 고유벡터 원값 26.0/22.7/13.3/14.7/8.8/9.7/4.8%, 발표용 배점 25/23/13/15/9/10/5점. CR 0.0105.</div>
+          <div class="phase">승 · METHOD</div>
+          <div class="slide-no"></div>
+        </div>
+      </section>
+
+      <!-- 11B. AHP CALCULATION -->
+      <section class="slide">
+        <div class="slide-inner">
+          <div class="kicker">승(承) · AHP 계산 검증</div>
+          <h2>AHP는 “표를 외우는 장면”이 아니라, 판단을 숫자로 고정하는 장치다</h2>
+          <p class="section-note">발표에서는 복잡한 행렬표보다 계산의 의미가 중요하다. 6개 전문가 페르소나는 같은 데이터 패킷을 보고 지표를 둘씩 비교했고, 그 판단을 하나의 가중치로 합쳤다.</p>
+          <div class="process-row">
+            <div class="stp"><b>① 같은 자료 제공</b><span>소비유출·연령·상권·의료·체육시설·부지자료</span></div>
+            <div class="stp"><b>② 둘씩 비교</b><span>예: 5060 수요가 부지면적보다 얼마나 중요한가</span></div>
+            <div class="stp"><b>③ 기하평균 집계</b><span>6인 판단을 한 행렬로 통합</span></div>
+            <div class="stp"><b>④ 일관성 검증</b><span>CR=0.01056 &lt; 0.10</span></div>
+          </div>
+          <div class="grid-2" style="margin-top:18px;">
+            <div class="card">
+              <strong>계산 결과를 읽는 법</strong>
+              <div class="table-wrap" style="margin-top:10px;">
+                <table>
+                  <thead><tr><th>항목</th><th>의미</th><th class="num">결과</th></tr></thead>
+                  <tbody>
+                    <tr><td>고유벡터</td><td>쌍대비교 판단에서 도출된 중요도</td><td class="num">7개 가중치</td></tr>
+                    <tr><td>λmax</td><td>판단 행렬이 얼마나 안정적인지 보는 값</td><td class="num">7.0836</td></tr>
+                    <tr><td>CR</td><td>판단이 앞뒤로 모순되지 않는지 보는 비율</td><td class="num"><b>0.01056</b></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="section-note">일반적으로 CR이 0.10보다 낮으면 판단 일관성이 있다고 본다. 본 계산은 0.01056으로 기준보다 충분히 낮다.</p>
+            </div>
+            <div class="card success">
+              <strong>그래서 이 가중치를 어떻게 썼나</strong>
+              <p>이 AHP는 미션1 전체 의사결정의 우선순위다. 다만 지도 위에 바로 찍을 수 있는 항목과 그렇지 않은 항목은 분리했다.</p>
+              <ul class="tight">
+                <li><b>100m 전역지도 반영:</b> 상권, 도심중심성, 의료, 기존 체육시설 분포</li>
+                <li><b>해석·필터 반영:</b> 5060 수요, 교통 접근, 대형부지 가능성</li>
+                <li><b>2차 필지평가 반영:</b> 면적, 지목, 지가, 경사, 기존 기반</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card info" style="margin-top:16px;">
+            <strong>왜 7개 가중치와 4개 지도지표가 다른가</strong>
+            <p style="color:var(--ink);font-size:14px;">
+              AHP는 미션1 전체 의사결정의 7개 기준이다. 그중 좌표화 가능한 상권·도심중심성·의료·체육시설 분포 4개는 100m 격자 지도에 반영했다.
+              60세+ 거주밀도와 보행·대중교통은 행정동·도로 조건으로 해석했고, 대형부지는 점수로 섞지 않고 <b>2차 하드 필터</b>로 적용했다.
+              이렇게 분리해야 “수요가 높은 곳”과 “산업단지를 지을 수 있는 곳”을 섞어버리지 않는다.
+            </p>
+          </div>
+          <div class="source">출처: `지표.md` AHP 지표체계, 직접 계산한 고유벡터·일관성비율, `grid_scores_100m.geojson` 좌표화 가능 지표.</div>
+          <div class="phase">승 · METHOD</div>
+          <div class="slide-no"></div>
         </div>
       </section>
 
@@ -999,7 +978,13 @@
         <div class="slide-inner">
           <div class="kicker">전(轉) · 점수 계산법</div>
           <h2>한 칸의 점수는 이렇게 계산했다 — 거리·개수를 점수로 바꿔 더한다</h2>
-          <p class="section-note">5,600개 격자마다 네 항목을 <b>같은 환산표</b>로 점수화해 더하고(raw 합), 0~100으로 정규화했다. 임의 배점이 아니라 거리·시설 수 구간으로 기계적으로 매겼다.</p>
+          <p class="section-note">5,600개 100m 격자마다 <b>격자 중심점</b>을 하나씩 잡고, 그 중심점에서 주변 데이터를 읽었다. 가장 가까운 상권 거리, 도심 기준점 거리, 반경 500m 의료시설 수, 반경 1km 기존 체육시설 수를 같은 환산표로 점수화해 더하고(raw 합), 0~100으로 정규화했다.</p>
+          <div class="equation" style="grid-template-columns:repeat(4,1fr);margin-top:12px;">
+            <div class="eq-box"><b>① 격자 중심점</b><span>100m 셀마다 대표 좌표 생성</span></div>
+            <div class="eq-box"><b>② 거리·반경 계산</b><span>상권·도심 거리, 의료·체육 개수</span></div>
+            <div class="eq-box"><b>③ 구간 점수화</b><span>가까움·많음·공백을 점수로 변환</span></div>
+            <div class="eq-box"><b>④ 정규화</b><span>raw_total ÷ 55 × 100</span></div>
+          </div>
           <div class="grid-2">
             <div class="card">
               <strong>① 네 항목 환산표 (실측 구간 → 점수)</strong>
@@ -1014,7 +999,7 @@
                   </tbody>
                 </table>
               </div>
-              <p class="section-note" style="margin-top:8px;"><b>총점 = 네 점수 합 × 1.82</b> (합 최대 55·실측 14~40 → 0~100 정규화, 실측 25.5~72.7).</p>
+              <p class="section-note" style="margin-top:8px;"><b>총점 = raw_total ÷ 55 × 100</b>. 여기서 55는 네 항목 만점 합계(20+10+10+15)다. 실측 raw_total은 14~40이어서 최종 점수 범위가 25.5~72.7로 나타났다.</p>
             </div>
             <div>
               <div class="card success">
@@ -1031,11 +1016,60 @@
                 <strong>체육 공백만 0점인 이유 = 핵심 해석</strong>
                 <p style="color:var(--ink);font-size:13.5px;">이 칸은 1km 안에 기존 체육시설이 40개나 있어 “공백” 점수가 0이다. 즉 72.7점은 <b>“빈 땅” 점수가 아니라 상권·의료·도심이 한 점에 겹친 ‘수요 중심’ 점수</b>다. 그래서 이 권역은 신규 수요를 가장 빨리 회수할 수 있는 곳이다.</p>
               </div>
+              <div class="card warning" style="margin-top:12px;">
+                <strong>육각평가와 다른 점</strong>
+                <p style="color:var(--ink);font-size:13.5px;">이 100m 격자점수는 <b>권역 수요밀도</b>만 본다. 필지 면적·지목·지가·건축물 활용성은 여기 넣지 않았다. 그 값들은 다음 단계의 <b>필지 육각평가</b>에서 따로 평가한다.</p>
+              </div>
             </div>
           </div>
           <div class="source">출처: `grid_scores_100m.geojson` 속성(s_commerce·s_core·s_medical·s_facility_gap·commerce_dist_m·core_dist_m·med_500·sports_1km) 실측 역산, 최고점 격자 raw_total 40.</div>
           <div class="phase">전 · SCORE FORMULA</div>
           <div class="slide-no"></div>
+        </div>
+      </section>
+
+      <!-- 12. MAP DASHBOARD -->
+      <section class="slide full">
+        <div class="map-layout">
+          <aside class="dash-panel">
+            <div class="kicker">전(轉) · 전역 평가 결과</div>
+            <h2>1차 상대밀도 피크는 남양·정상 도심권이다</h2>
+            <p class="small">지도는 5,600개 격자 점수를 <b>상대밀도</b>로 정규화한 히트맵·등고선이다. 최저~최고를 0~1로 환산해 <b>가장 붉은 곳이 곧 최고 수요권</b>이 되도록 했다. 붉고 등고선이 촘촘할수록 상권·의료·도심 접근이 겹친 생활체육 수요가 강하다.</p>
+            <div class="dash-metrics">
+              <div class="dash-metric"><span>평가 격자</span><b>5,600</b></div>
+              <div class="dash-metric"><span>점수 범위</span><b>25.5–72.7</b></div>
+              <div class="dash-metric"><span>최고점 권역</span><b>남양·정상권</b></div>
+            </div>
+            <div class="card" style="padding:12px;margin:0 0 12px;">
+              <strong style="font-size:13px;margin-bottom:6px;">지도 읽는 순서</strong>
+              <p style="font-size:12px;color:var(--muted);line-height:1.5;">① 가장 붉은 등고밀도 피크에서 최고점 권역을 찾고<br>② 65점 이상 고득점이 연결되는 면을 확인한 뒤<br>③ 이후 단계에서만 필지 단위 육각평가로 넘어간다.</p>
+            </div>
+            <div class="candidate-table">
+              <table>
+                <thead><tr><th>순위</th><th>권역</th><th>실제 점수</th><th>판정</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="rank">1</span></td><td>남양·정상 도심피크</td><td>72.7</td><td>1등 대상권역</td></tr>
+                  <tr><td><span class="rank two">2</span></td><td>마달동 북서 고득점권</td><td>67.3</td><td>2등 대상권역</td></tr>
+                  <tr><td><span class="rank three">3</span></td><td>정하동 동부 고득점권</td><td>67.3</td><td>3등 대상권역</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small">핵심 ▸ 전역평가 지도에서는 필지를 표시하지 않는다. 이 단계의 결론은 오직 “어느 권역의 수요 밀도가 높은가”이며, 필지 선택은 다음 육각평가에서 별도로 수행한다.</p>
+            <div class="card warning" style="padding:12px;margin:12px 0 0;">
+              <strong style="font-size:13px;">“시설(빨간 점)이 많은데 왜 1등?”</strong>
+              <p style="font-size:12px;color:var(--ink);line-height:1.5;">남양·정상권은 <b>빈 곳이라서가 아니라</b> 상권·의료·도심이 가장 진하게 겹친 <b>수요 중심</b>이라 1등이다. 점수도 상권 20 + 도심 10 + 의료 10 + <b>체육공백 0</b>(이미 시설 많음) = 만점 가까이. 즉 “시설이 없어서”가 아니라 <b>“수요가 가장 많아서”</b>다. 빨간 점들은 대부분 작은 헬스·태권도라 <b>아레나·수영·재활 같은 복합 수요는 못 잡아</b> 동해로 샌다 → 복합단지로 회수.</p>
+            </div>
+            <div class="source">출처: `heatmap_grid_100m.geojson`(고득점만 저투명도), `isolines_100m_dense.geojson`(등고선 3배 밀도), `grid_scores_100m.geojson`, `buildings.geojson`, `sports_points.geojson`(122, 빨간 점=명칭 라벨), `medical_points.geojson`(73, 파란 점).</div>
+          </aside>
+          <div style="position: relative; min-width: 0;">
+            <div id="map"></div>
+            <div class="legend">
+              <div class="legend-gradient"></div>
+              <div class="legend-labels"><span>0.0 낮음</span><span>상대밀도</span><span>1.0 피크</span></div>
+              <p style="margin-top:10px;color:var(--muted);font-size:12px;line-height:1.45;">빨간 점: 기존 스포츠시설 · 파란 점: 의료시설 · 원형 경계: 1·2·3등 권역. 필지는 이 전역평가 지도에 표시하지 않는다.</p>
+            </div>
+            <div class="map-caption"><b>1차 결론:</b> 상대밀도 분석의 최고점은 남양·정상 도심피크(72.7점)다. 이후 검토에서는 이 고득점 권역 안에서 필지 면적·용도·지가를 확인해 실제 후보지를 고른다.</div>
+          </div>
         </div>
       </section>
 
@@ -1202,7 +1236,7 @@
           <aside class="dash-panel">
             <div class="kicker">전(轉) · 선정 필지 지도</div>
             <h2>육각평가가 도출한 6필지를 지도에 올린다</h2>
-            <p class="small">CARTO 밝은 지도 위에 건축물(높이)·선정 필지·필지별 육각형을 함께 표시한다. 도심권 5필지가 본 캠퍼스 클러스터, 정하동 1필지가 체류·야외 확장이다.</p>
+            <p class="small">CARTO 밝은 지도 위에 건축물(높이)·선정 필지·필지별 육각형을 함께 표시한다. 도심권 5필지는 <b>도심 본 캠퍼스 클러스터</b>로 묶고, 정하동 1필지는 <b>체류·야외 확장 거점</b>으로 연결한다.</p>
             <div class="dash-metrics">
               <div class="dash-metric"><span>선정 필지</span><b>6</b></div>
               <div class="dash-metric"><span>합산 면적</span><b>133,345㎡</b></div>
@@ -1215,9 +1249,9 @@
             <div id="map2"></div>
             <div class="legend">
               <div class="legend-labels" style="margin-top:0;"><span><b>선정 필지 지도</b></span></div>
-              <p style="margin-top:8px;color:var(--muted);font-size:12px;line-height:1.45;"><span style="color:#b41818;font-weight:800;">●</span> 도심권 본 캠퍼스 클러스터(5) · <span style="color:#2f6fab;font-weight:800;">●</span> 정하동 확장(1) · 회색 입체: 건축물. 좌측 패널에서 각 필지의 육각형을 확인.</p>
+              <p style="margin-top:8px;color:var(--muted);font-size:12px;line-height:1.45;"><span style="color:#b41818;font-weight:800;">●</span> 도심권 본 캠퍼스 클러스터(5) · <span style="color:#2f6fab;font-weight:800;">●</span> 정하동 확장(1) · <span style="color:#20735b;font-weight:900;">━</span> 도보권 연결 · <span style="color:#2f6fab;font-weight:900;">- -</span> 셔틀·그린웨이 연결 · 회색 입체: 건축물.</p>
             </div>
-            <div class="map-caption"><b>도출 결과:</b> 산지·초소형 필지를 배제하고 평지 6필지(133,345㎡)가 남았다. 각 필지의 육각형이 좌측 패널에 정렬돼 있어, 어떤 축이 강해 선정됐는지 바로 확인된다.</div>
+            <div class="map-caption"><b>도출 결과:</b> 산지·초소형 필지를 배제하고 평지 6필지(133,345㎡)가 남았다. 5필지는 도심 본 캠퍼스 클러스터로 묶고, 정하동은 체류·전지훈련 확장 거점으로 연결한다.</div>
           </div>
         </div>
       </section>
@@ -1254,12 +1288,12 @@
       <!-- 17B. PER-PARCEL PROGRAM -->
       <section class="slide">
         <div class="slide-inner">
-          <div class="kicker">결(結) · 지표 → 프로그램</div>
-          <h2>필지의 육각형(지표)이 프로그램을 정한다 — 강한 축이 곧 그 땅의 쓸모</h2>
-          <p class="section-note">프로그램은 “있어 보여서”가 아니라, 그 필지가 <b>어느 지표(육각 축)에서 강한지</b>로 정했다. 지표는 미션 1의 4문제에서 나왔으니, 결국 <b>문제 → 지표 → 필지 선정 → 지표 프로필 → 프로그램</b>이 한 줄로 이어진다.</p>
+          <div class="kicker">결(結) · 미션 2 입력값</div>
+          <h2>필지의 육각형은 “무엇을 배치해야 하는가”의 조건을 만든다</h2>
+          <p class="section-note">이 장은 최종 배치도가 아니라 <b>미션 2로 넘기는 프로그램 조건표</b>다. 각 필지의 강한 축을 읽어 “이 땅은 어떤 기능을 받아야 설득력이 있는가”를 정리하고, 실제 공간 이미지와 운영 방식은 미션 2에서 이어서 보여준다.</p>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>필지</th><th>결정적 지표·원자료 (왜 이 필지가 이 쓸모)</th><th>들어가는 프로그램</th><th>뿌리</th></tr></thead>
+              <thead><tr><th>필지</th><th>결정적 지표·원자료</th><th>미션 2에 넘길 기능 조건</th><th>뿌리</th></tr></thead>
               <tbody>
                 <tr class="peak"><td><b>당저동 57</b><br><span class="source" style="margin:0;">학교용지 2.53ha</span></td><td><b>수요 5.0(최고 집객)</b> + 최대 면적 + 접근 4.75 + 학교용지</td><td>국제학교 코어(교사·강당·행정)</td><td>엘리트 육성·<span class="tag red">④</span></td></tr>
                 <tr><td><b>당저동 96</b><br><span class="source" style="margin:0;">학교용지 2.01ha</span></td><td>학교용지 + <b>당저57 도보 인접</b> + 접근 4.75</td><td>생활관·기숙·식당</td><td><span class="tag red">④</span> 연중 상주</td></tr>
@@ -1275,22 +1309,9 @@
             <div class="card info"><strong>사업성(지가) 축이 ‘대면적’을 가른다</strong><p>상대적 저지가 3.0(정하41-186) → 넓은 땅이 필요한 <b>체류·야외·전지훈련</b>. 고지가 도심은 작아도 되는 수직 복합으로.</p></div>
             <div class="card warning"><strong>수요 축이 ‘핵심 집객’을 가른다</strong><p>수요 5.0(당저57·정상377) → 사람이 가장 많이·자주 오는 <b>학교 본부·훈련 허브</b>. 수요 지표가 단지의 얼굴을 정한다.</p></div>
           </div>
-          <p class="section-note">즉 프로그램의 근거는 <b>그 필지의 지표 프로필</b>이고, 그 지표는 <b>미션 1의 4문제</b>에서 나왔다. 미션 2·3은 이 필지별 프로그램을 입력값으로 받는다.</p>
+          <p class="section-note">즉 미션 1은 “그림”을 먼저 만든 것이 아니라, <b>필지별 역할 조건</b>을 데이터로 만들었다. 미션 2는 이 조건을 받아 실제 배치·동선·조감도·시간운영으로 바꾼다.</p>
           <div class="source">출처: `hex_selected_parcels.geojson` 6축 점수(수요·면적·지형·접근·인프라·사업성)·지목·면적, 2026 개별공시지가, Esri 위성(오십천·해안·나대지).</div>
-          <div class="phase">결 · PROGRAM</div>
-          <div class="slide-no"></div>
-        </div>
-      </section>
-
-      <!-- 17C. PER-PARCEL SATELLITE VIEW -->
-      <section class="slide">
-        <div class="slide-inner">
-          <div class="kicker">결(結) · 필지별 위성 뷰</div>
-          <h2>선정 6필지 — 측면(경사) 위성 뷰로 본 실제 부지</h2>
-          <div class="satgrid" id="satGrid"></div>
-          <p class="section-note">Esri World Imagery 위성 영상을 경사(pitch) 뷰로 — 각 필지의 실제 형상·주변 건물·도로를 측면에서 확인한다. 빨간 외곽선이 선정 필지, 라벨은 배치 프로그램. <b>오른쪽 위 ⤢ 버튼(또는 더블클릭)으로 전체 화면 확대</b>. (실측 항공·드론 촬영본으로 교체 가능)</p>
-          <div class="source">출처: Esri World Imagery 위성 타일, `hex_selected_parcels.geojson` 필지 폴리곤·프로그램.</div>
-          <div class="phase">결 · SATELLITE</div>
+          <div class="phase">결 · M2 INPUT</div>
           <div class="slide-no"></div>
         </div>
       </section>
@@ -1298,8 +1319,8 @@
       <!-- 18. SPORTS + CONCLUSION -->
       <section class="slide">
         <div class="slide-inner">
-          <div class="kicker">결(結) · 종목·프로그램 & 결론</div>
-          <h2>부족한 건 채우고, 강한 건 산업화한다 — 그리고 최종안</h2>
+          <div class="kicker">결(結) · 미션 1 결론</div>
+          <h2>부족한 건 채우고, 강한 건 산업화한다 — 미션 1의 결론</h2>
           <div class="matrix">
             <div class="matrix-cell"><b>부족해서 넣는 기능</b><ul><li>헬스·근력 (동해 2.4배 부족)</li><li>GX·요가·필라테스 (2.7배)</li><li>실내 다목적 구기 (0개 공백)</li><li>테니스·피클볼</li></ul></div>
             <div class="matrix-cell"><b>강해서 키우는 기능</b><ul><li>수영·수중재활 (4 vs 1)</li><li>러닝·웰니스</li><li>스포츠재활 (의료 +5.1%)</li><li>해양은 기존 해변 연계</li></ul></div>
@@ -1318,7 +1339,7 @@
           </div>
           <div class="final-band">
             <p style="color:#fff;font-weight:800;font-size:20px;">최종안 ▸ <b>“여섯 개의 점, 하나의 캠퍼스”</b> — 전역 100m 격자 → 1·2·3순위 권역 → 2,438필지 육각평가로 도출한 평지 6필지(133,345㎡)를, 도심 본 캠퍼스 클러스터(5필지) + 정하동 확장(1필지)으로 연결한 사계절 스포츠 교육·산업 단지.</p>
-            <p style="margin-top:8px;">6필지는 모두 평지·시가지라 곧바로 조성 가능하다. 이 ‘여섯 점’을 미션 2에서 잇고 나눠 쓰고, 미션 3에서 사업성으로 증명한다.</p>
+            <p style="margin-top:8px;">6필지는 모두 평지·시가지라 조성 가능성이 높다. 이 ‘여섯 점’을 미션 2에서 잇고 나눠 쓰고, 미션 3에서 사업성으로 검증한다.</p>
           </div>
           <div class="source">출처: 상가정보 2025.10 시설 격차, 지역소비 XLSX 업종별 매출, 과제 PDF 프로그램, `미션1.md` 종합. · 분석 전체 종료.</div>
           <div class="phase">결 · CONCLUSION</div>
@@ -1618,6 +1639,26 @@
         </div>
       </section>
 
+      <!-- 24C. PER-PARCEL IMAGE VIEW -->
+      <section class="slide">
+        <div class="slide-inner">
+          <div class="kicker">미션 2 · 필지별 계획 이미지</div>
+          <h2>선정 6필지 — 각 필지의 역할을 계획 이미지로 확인한다</h2>
+          <div class="parcel-image-grid">
+            <figure class="parcel-image-card" data-title="당저동 57 · 국제학교 코어" data-subtitle="최고 총점 82.5 · 학교 본부·교육 코어" data-image="삼척이미지/삼척이미지/당저동 57(국제학교 코어).png" data-video="삼척이미지/삼척이미지/당저동 57.mp4"><img src="삼척이미지/삼척이미지/당저동 57(국제학교 코어).png" alt="당저동 57 국제학교 코어"><figcaption class="pic-label"><b>당저동 57 · 국제학교 코어</b><span>최고 총점 82.5 · 학교 본부·교육 코어</span></figcaption></figure>
+            <figure class="parcel-image-card" data-title="남양동 124 · 아레나·수영장" data-subtitle="오십천 수변 · 실내훈련·수중재활" data-image="삼척이미지/삼척이미지/남양동 124(아레나 수영장).png" data-video="삼척이미지/삼척이미지/남양동 124.mp4"><img src="삼척이미지/삼척이미지/남양동 124(아레나 수영장).png" alt="남양동 124 아레나 수영장"><figcaption class="pic-label"><b>남양동 124 · 아레나·수영장</b><span>오십천 수변 · 실내훈련·수중재활</span></figcaption></figure>
+            <figure class="parcel-image-card" data-title="당저동 96 · 생활관·기숙·식당" data-subtitle="학교 코어 인접 · 연중 상주 기반" data-image="삼척이미지/삼척이미지/당저동 96(생활관,기숙,식당).png" data-video="삼척이미지/삼척이미지/당저동 96.mp4"><img src="삼척이미지/삼척이미지/당저동 96(생활관,기숙,식당).png" alt="당저동 96 생활관 기숙 식당"><figcaption class="pic-label"><b>당저동 96 · 생활관·기숙·식당</b><span>학교 코어 인접 · 연중 상주 기반</span></figcaption></figure>
+            <figure class="parcel-image-card" data-title="정상동 473 · 생활체육·웰니스" data-subtitle="도심 접점 · 주민 개방·5060 재활" data-image="삼척이미지/삼척이미지/정상동 473(생활체육 웰니스).png" data-video="삼척이미지/삼척이미지/정상동 473.mp4"><img src="삼척이미지/삼척이미지/정상동 473(생활체육 웰니스).png" alt="정상동 473 생활체육 웰니스"><figcaption class="pic-label"><b>정상동 473 · 생활체육·웰니스</b><span>도심 접점 · 주민 개방·5060 재활</span></figcaption></figure>
+            <figure class="parcel-image-card" data-title="정상동 377 · 전문훈련·R&D" data-subtitle="나대지 활용 · 스포츠테크·창업 입주" data-image="삼척이미지/삼척이미지/정상동 377(전문훈련 R&D 창업).png" data-video="삼척이미지/삼척이미지/정상동 377.mp4"><img src="삼척이미지/삼척이미지/정상동 377(전문훈련 R&D 창업).png" alt="정상동 377 전문훈련 R&D 창업"><figcaption class="pic-label"><b>정상동 377 · 전문훈련·R&D</b><span>나대지 활용 · 스포츠테크·창업 입주</span></figcaption></figure>
+            <figure class="parcel-image-card" data-title="정하동 41-186 · 체류·전지훈련·야외" data-subtitle="해안 확장 거점 · 호텔·캠프·야외훈련" data-image="삼척이미지/삼척이미지/정하동 41-186(체류 전지훈련 야외).png" data-video="삼척이미지/삼척이미지/정하동 41-186.mp4"><img src="삼척이미지/삼척이미지/정하동 41-186(체류 전지훈련 야외).png" alt="정하동 41-186 체류 전지훈련 야외"><figcaption class="pic-label"><b>정하동 41-186 · 체류·전지훈련·야외</b><span>해안 확장 거점 · 호텔·캠프·야외훈련</span></figcaption></figure>
+          </div>
+          <p class="section-note">해석 ▸ 앞 장에서 시설 규모와 프로그램을 배정했기 때문에, 이 장에서는 각 필지가 <b>어떤 공간 이미지로 구현되는지</b>를 확인한다. 이미지를 클릭하면 큰 이미지와 동일 필지명 영상이 함께 열린다.</p>
+          <div class="source">출처: 사용자가 제공한 `삼척이미지/삼척이미지/*.png`, `hex_selected_parcels.geojson` 선정 6필지.</div>
+          <div class="phase">미션 2 · SITE IMAGE</div>
+          <div class="slide-no"></div>
+        </div>
+      </section>
+
       <!-- 25. TIME-SHARING MATRIX (CENTERPIECE) -->
       <section class="slide">
         <div class="slide-inner">
@@ -1722,23 +1763,27 @@
         </div>
       </section>
 
-      <!-- 29. STORYBOARD -->
+      <!-- 29. INTEGRATED VIDEO -->
       <section class="slide">
         <div class="slide-inner">
-          <div class="kicker">미션 2 · 영상 스토리보드</div>
-          <h2>“하루, 그리고 사계절 — 시간으로 살아 움직이는 캠퍼스” (약 90초)</h2>
-          <div class="story-grid">
-            <div class="frame"><div class="no">1</div><div class="shot" style="background:#0f4d3d;">🌅</div><div class="cap"><b>06:00 오프닝</b><span>바다·산·캠퍼스 항공샷 / “삼척에서 훈련하는 것이 세계로 가는 지름길”</span></div></div>
-            <div class="frame"><div class="no">2</div><div class="shot" style="background:#20735b;">🏹</div><div class="cap"><b>09:00 오전</b><span>아레나 — 엘리트 훈련 / “오전, 이곳은 엘리트 훈련장”</span></div></div>
-            <div class="frame"><div class="no">3</div><div class="shot" style="background:#c56f32;">💧</div><div class="cap"><b>13:00 낮</b><span>같은 수영장 — 5060 수중재활 / “같은 물에서 재활이 시작된다”</span></div></div>
-            <div class="frame"><div class="no">4</div><div class="shot" style="background:#2f6fab;">➕</div><div class="cap"><b>16:00 오후</b><span>재활센터 — 선수·주민 회복 / “회복도 데이터로”</span></div></div>
-            <div class="frame"><div class="no">5</div><div class="shot" style="background:#9b7c2c;">🏀</div><div class="cap"><b>19:00 저녁</b><span>같은 체육관 — 주민 리그 / “이곳은 우리 동네 체육관”</span></div></div>
-            <div class="frame"><div class="no">6</div><div class="shot" style="background:linear-gradient(90deg,#2f6fab,#0f4d3d);">🔁</div><div class="cap"><b>사계절 전환</b><span>여름 관광·수영 → 겨울 전지훈련 합숙 디졸브 / “비수기는 없다”</span></div></div>
-            <div class="frame"><div class="no">7</div><div class="shot" style="background:#17211f;">🏟️</div><div class="cap"><b>클로징</b><span>권역 연결도 → 로고 / “하나의 공간, 네 개의 삶”</span></div></div>
-            <div class="imgslot" style="min-height:0;"><b>📷 영상 스틸·실사 삽입</b><span>각 컷 자리에 직접 촬영/렌더 영상을 넣으세요. 핵심 모티프: 같은 앵글, 시간만 변신.</span></div>
+          <div class="kicker">미션 2 · 영상</div>
+          <h2>“여섯 개의 점, 하나의 캠퍼스” — 통합 조감도와 전체 영상</h2>
+          <div class="visual-row" style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:18px;margin-top:16px;align-items:stretch;">
+            <div class="overview-hero" style="height:520px;min-height:0;margin-top:0;" data-title="통합 그린웨이 조감도" data-subtitle="6개 필지를 하나의 캠퍼스로 묶는 전체 동선" data-image="삼척이미지/삼척이미지/통합 그린웨이 조감도.png" data-video="삼척이미지/삼척이미지/6개단지 다.mp4">
+              <img src="삼척이미지/삼척이미지/통합 그린웨이 조감도.png" alt="삼척 스포츠 교육·산업 단지 통합 그린웨이 조감도" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+              <div class="missing-note">통합 그린웨이 조감도 파일을<br>`삼척이미지/삼척이미지/통합 그린웨이 조감도.png`로 저장하면 이 위치에 표시됩니다.</div>
+              <div class="overview-caption">
+                <b>읽는 법:</b> 도심 5필지는 본 캠퍼스 클러스터, 정하동 41-186은 해안 체류·전지훈련 거점이다. 녹색 동선은 6개 필지를 하나의 캠퍼스로 묶는 통합 인프라다.
+              </div>
+            </div>
+            <div class="video-frame" style="margin-top:0;align-self:stretch;display:flex;align-items:center;">
+              <video controls playsinline preload="metadata" poster="삼척이미지/삼척이미지/통합 그린웨이 조감도.png" style="max-height:520px;">
+                <source src="삼척이미지/삼척이미지/6개단지 다.mp4" type="video/mp4">
+              </video>
+            </div>
           </div>
-          <p class="section-note">제작 메모 ▸ `masterplan-map.html`·`masterplan-ppt.html`의 3D 권역 색을 그대로 쓰고, <b>동일 카메라 앵글에서 시간대만 바뀌는 컷</b>(같은 공간 변신)을 반복 모티프로 한다. (실제 영상 파일은 직접 제작/삽입)</p>
-          <div class="source">출처: `미션2.md` 8장 스토리보드 구성안, 과제 PDF “주요 이용 방식에 대한 짧은 영상”.</div>
+          <p class="section-note" style="margin-top:12px;">조감도를 클릭하면 큰 이미지와 전체 영상이 함께 열린다. 이 장은 앞에서 설명한 필지별 프로그램과 동선이 실제로 하나의 캠퍼스로 읽히는지 확인하는 최종 시각화 장이다.</p>
+          <div class="source">출처: 사용자가 제공한 `통합 그린웨이 조감도.png`, `6개단지 다.mp4`.</div>
           <div class="phase">미션 2 · 마스터플랜</div>
           <div class="slide-no"></div>
         </div>
@@ -2078,6 +2123,14 @@
       <button id="satModalClose" class="sat-modal-close">✕ 닫기 (Esc)</button>
       <div id="satModalMap"></div>
     </div>
+    <div id="mediaModal" class="media-modal" aria-hidden="true">
+      <div id="mediaModalTitle" class="media-modal-title"></div>
+      <button id="mediaModalClose" class="media-modal-close">✕ 닫기 (Esc)</button>
+      <div class="media-modal-body">
+        <div class="media-modal-image"><img id="mediaModalImage" alt=""></div>
+        <div id="mediaModalVideoWrap" class="media-modal-video empty">동일 필지명 영상이 있으면 여기에 표시됩니다.</div>
+      </div>
+    </div>
 
     <script>
       const deck = document.querySelector("#deck");
@@ -2386,6 +2439,65 @@
           map.addLayer({ id: "sel2-fill", type: "fill", source: "sel2", paint: { "fill-color": ["get", "__color"], "fill-opacity": 0.45 } });
           map.addLayer({ id: "sel2-line", type: "line", source: "sel2", paint: { "line-color": ["get", "__color"], "line-width": 2.6, "line-opacity": 0.95 } });
 
+          const centerByPnu = {};
+          selected.features.forEach((f) => { centerByPnu[String(f.properties.PNU)] = centroidOf(f.geometry); });
+          const coreOrder = [
+            "5123010500100570000",
+            "5123010500100960000",
+            "5123012000101240000",
+            "5123012500104730000",
+            "5123012500103770000"
+          ].filter((pnu) => centerByPnu[pnu]);
+          let coreCoords = coreOrder.map((pnu) => centerByPnu[pnu]);
+          if (coreCoords.length > 2) {
+            const loopCenter = [
+              coreCoords.reduce((sum, c) => sum + c[0], 0) / coreCoords.length,
+              coreCoords.reduce((sum, c) => sum + c[1], 0) / coreCoords.length
+            ];
+            coreCoords = coreCoords
+              .map((coord) => ({ coord, angle: Math.atan2(coord[1] - loopCenter[1], coord[0] - loopCenter[0]) }))
+              .sort((a, b) => a.angle - b.angle)
+              .map((d) => d.coord);
+          }
+          const expandCoord = centerByPnu["5123012600100410186"];
+          const linkFeatures = [];
+          if (coreCoords.length > 1) {
+            linkFeatures.push({
+              type: "Feature",
+              properties: { type: "core", name: "도심 본 캠퍼스 도보권" },
+              geometry: { type: "LineString", coordinates: [...coreCoords, coreCoords[0]] }
+            });
+          }
+          if (coreCoords.length && expandCoord) {
+            const anchor = coreCoords[coreCoords.length - 1];
+            linkFeatures.push({
+              type: "Feature",
+              properties: { type: "expand", name: "셔틀·오십천 그린웨이 연결" },
+              geometry: { type: "LineString", coordinates: [anchor, expandCoord] }
+            });
+          }
+          map.addSource("campus-links2", { type: "geojson", data: { type: "FeatureCollection", features: linkFeatures } });
+          map.addLayer({ id: "campus-link-glow", type: "line", source: "campus-links2", paint: { "line-color": ["match", ["get", "type"], "core", "#20735b", "#2f6fab"], "line-width": ["match", ["get", "type"], "core", 11, 9], "line-opacity": 0.08 } });
+          map.addLayer({ id: "campus-link-core", type: "line", source: "campus-links2", filter: ["==", ["get", "type"], "core"], paint: { "line-color": "#20735b", "line-width": 3.2, "line-opacity": 0.55 } });
+          map.addLayer({ id: "campus-link-expand", type: "line", source: "campus-links2", filter: ["==", ["get", "type"], "expand"], paint: { "line-color": "#2f6fab", "line-width": 3.0, "line-opacity": 0.52, "line-dasharray": [2.2, 1.4] } });
+
+          const addClusterLabel = (coord, text, sub, color) => {
+            if (!coord) return;
+            const el = document.createElement("div");
+            el.innerHTML = `<b>${text}</b><span>${sub}</span>`;
+            el.style.cssText = `padding:7px 10px;border:1.5px solid ${color};border-radius:9px;background:rgba(255,255,255,0.96);box-shadow:0 8px 18px rgba(20,34,31,0.18);font:800 12px Pretendard,sans-serif;white-space:nowrap;color:${color};line-height:1.2;`;
+            el.querySelector("span").style.cssText = "display:block;margin-top:3px;font-size:10.5px;font-weight:700;color:#5f6a65;";
+            new maplibregl.Marker({ element: el, anchor: "center" }).setLngLat(coord).addTo(map);
+          };
+          if (coreCoords.length) {
+            const coreCenter = [
+              coreCoords.reduce((sum, c) => sum + c[0], 0) / coreCoords.length,
+              coreCoords.reduce((sum, c) => sum + c[1], 0) / coreCoords.length
+            ];
+            addClusterLabel(coreCenter, "도심 본 캠퍼스", "5필지 · 도보권 클러스터", "#20735b");
+          }
+          addClusterLabel(expandCoord, "정하동 확장 거점", "체류·전지훈련·야외", "#2f6fab");
+
           // 필지별 라벨 마커
           const bounds = new maplibregl.LngLatBounds();
           selected.features.forEach((f) => {
@@ -2403,6 +2515,63 @@
       }
       buildHexGallery();
       initMap2();
+
+      // ===== 슬라이드 25 : 필지별 계획 이미지/영상 확대 모달 =====
+      function closeMediaModal() {
+        const modal = document.getElementById("mediaModal");
+        const wrap = document.getElementById("mediaModalVideoWrap");
+        if (!modal || !wrap) return;
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        wrap.innerHTML = "동일 필지명 영상이 있으면 여기에 표시됩니다.";
+        wrap.classList.add("empty");
+      }
+      function openMediaModal(card) {
+        const modal = document.getElementById("mediaModal");
+        const title = document.getElementById("mediaModalTitle");
+        const image = document.getElementById("mediaModalImage");
+        const wrap = document.getElementById("mediaModalVideoWrap");
+        if (!modal || !title || !image || !wrap) return;
+        const imageSrc = card.dataset.image || card.querySelector("img")?.getAttribute("src") || "";
+        const videoSrc = card.dataset.video || "";
+        title.innerHTML = `${card.dataset.title || ""}<small>${card.dataset.subtitle || ""}</small>`;
+        image.src = imageSrc;
+        image.alt = card.dataset.title || "";
+        wrap.innerHTML = "";
+        wrap.classList.remove("empty");
+
+        if (videoSrc) {
+          const video = document.createElement("video");
+          video.controls = true;
+          video.playsInline = true;
+          video.preload = "metadata";
+          video.poster = imageSrc;
+          const source = document.createElement("source");
+          source.src = videoSrc;
+          source.type = "video/mp4";
+          video.appendChild(source);
+          video.addEventListener("error", () => {
+            wrap.innerHTML = "아직 동일 필지명 영상 파일이 없습니다.";
+            wrap.classList.add("empty");
+          }, { once: true });
+          wrap.appendChild(video);
+        } else {
+          wrap.innerHTML = "아직 동일 필지명 영상 파일이 없습니다.";
+          wrap.classList.add("empty");
+        }
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+      }
+      (function wireMediaModal() {
+        document.querySelectorAll(".parcel-image-card, .overview-hero").forEach((card) => {
+          card.addEventListener("click", () => openMediaModal(card));
+        });
+        const closeBtn = document.getElementById("mediaModalClose");
+        const modal = document.getElementById("mediaModal");
+        if (closeBtn) closeBtn.addEventListener("click", closeMediaModal);
+        if (modal) modal.addEventListener("click", (e) => { if (e.target === modal) closeMediaModal(); });
+        window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMediaModal(); });
+      })();
 
       // ===== 슬라이드 17C : 필지별 위성(경사) 뷰 — Esri World Imagery =====
       const ESRI_STYLE = {
