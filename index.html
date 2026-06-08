@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
@@ -731,7 +731,7 @@
             <defs><marker id="aF" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#89b7a9"/></marker></defs>
             <rect x="20" y="40" width="200" height="70" rx="10" fill="#fff" stroke="#d9e2de"/><text x="44" y="72" class="svg-title">도시 문제</text><text x="44" y="95" class="svg-small">유출·공백·수요·비수기</text>
             <line x1="226" y1="75" x2="296" y2="75" stroke="#89b7a9" stroke-width="4" marker-end="url(#aF)"/>
-            <rect x="302" y="40" width="200" height="70" rx="10" fill="#fff" stroke="#8bb9aa"/><text x="326" y="72" class="svg-title">지표화</text><text x="326" y="95" class="svg-small">문제 → 4~7개 지표</text>
+            <rect x="302" y="40" width="200" height="70" rx="10" fill="#fff" stroke="#8bb9aa"/><text x="326" y="72" class="svg-title">지표화</text><text x="326" y="95" class="svg-small">문제 → AHP 7기준</text>
             <line x1="508" y1="75" x2="578" y2="75" stroke="#89b7a9" stroke-width="4" marker-end="url(#aF)"/>
             <rect x="584" y="40" width="200" height="70" rx="10" fill="#fff" stroke="#d9e2de"/><text x="608" y="72" class="svg-title">전역 채점</text><text x="608" y="95" class="svg-small">5,600 격자 상대밀도</text>
             <line x1="790" y1="75" x2="860" y2="75" stroke="#89b7a9" stroke-width="4" marker-end="url(#aF)"/>
@@ -761,13 +761,15 @@
             </table>
           </div>
           <div class="card info" style="margin-top:16px;">
-            <strong>1차 격자 점수 = 실제로 계산된 4개 공간지표의 합</strong>
-            <p style="color:var(--ink);font-size:14px;">
-              `grid_scores_100m.geojson`의 점수는 <b>상권(`s_commerce`) + 체육공백(`s_facility_gap`) + 의료(`s_medical`) + 도심중심성(`s_core`)</b>을 합산해 0~100으로 정규화한 값이다(실측 범위 25.5~72.7).
-              ⑤ 부지 실행가능성은 점수가 아닌 <b>면적·용도 필터</b>로 2차에서 적용한다 — 이것이 “수요 1등”과 “캠퍼스 1등”이 갈리는 이유다.
+            <strong>혼동 주의 — “지표”는 두 단계로 나뉜다 (AHP 7기준 ≠ 격자 4지표)</strong>
+            <p style="color:var(--ink);font-size:13.5px;line-height:1.7;">
+              ① <b>AHP 7기준</b>은 “무엇을 얼마나 중요하게 볼까”라는 <b>가중치 판단 기준</b>이다(다음 장).
+              ② 그중 좌표로 계산 가능한 <b>4개만 권역 격자에 연속 계산식으로 직접 반영</b>한다 —
+              상권(`s_commerce`)·도심중심성(`s_core`)·의료(`s_medical`)·실내체육 공백(`s_facility_gap`). `grid_scores_100m.geojson`은 이 4개를 합산해 0~100으로 정규화한 값이다(실측 25.5~72.7).
+              ③ 나머지 기준(60세+ 거주수요는 상권·의료·도심 근접으로 대리, 보행·대형부지·지목은 <b>다음 필지 육각평가</b>로) 이어받는다. 그래서 “지표가 7개라더니 지도엔 4개”인 게 아니라, <b>판단 기준 7 → 격자 계산 4 → 필지 평가 단계로 역할이 나뉜 것</b>이다.
             </p>
           </div>
-          <div class="source">출처: `지표.md` 7지표 체계, `grid_scores_100m.geojson` 4개 실측 지표(s_commerce·s_facility_gap·s_medical·s_core).</div>
+          <div class="source">출처: `지표.md` AHP 7기준 체계, `grid_scores_100m.geojson` 격자 4개 연속지표(s_commerce·s_core·s_medical·s_facility_gap).</div>
           <div class="phase">승 · METHOD</div>
           <div class="slide-no"></div>
         </div>
@@ -818,7 +820,7 @@
           <div class="card info" style="margin-top:16px;">
             <strong>③ 허점 방지 장치</strong>
             <p style="color:var(--ink);font-size:14px;">
-              모든 페르소나는 같은 데이터 패킷을 보고, 같은 7개 지표만 비교하게 했다. 새 후보지를 임의로 만들거나 “좋아 보이는 부지”를 먼저 고르지 못하게 했고,
+              모든 페르소나는 같은 데이터 패킷을 보고, 같은 7개 AHP 기준만 비교하게 했다. 새 후보지를 임의로 만들거나 “좋아 보이는 부지”를 먼저 고르지 못하게 했고,
               대형부지는 1차 지도점수에 섞지 않고 2차 하드 필터로 분리했다. 그래서 남양·정상 도심피크가 1차 수요 1등이고, 실제 조성 가능 부지는 별도 지표로 검토한다는 논리적 분리가 유지된다.
             </p>
           </div>
@@ -899,18 +901,18 @@
               <strong>그래서 이 가중치를 어떻게 썼나</strong>
               <p>이 AHP는 미션1 전체 의사결정의 우선순위다. 다만 지도 위에 바로 찍을 수 있는 항목과 그렇지 않은 항목은 분리했다.</p>
               <ul class="tight">
-                <li><b>100m 전역지도 반영:</b> 상권, 도심중심성, 의료, 기존 체육시설 분포</li>
-                <li><b>해석·필터 반영:</b> 5060 수요, 교통 접근, 대형부지 가능성</li>
-                <li><b>2차 필지평가 반영:</b> 면적, 지목, 지가, 경사, 기존 기반</li>
+                <li><b>권역 격자 연속계산(4):</b> 상권 · 도심중심성 · 의료 · 실내체육 공백</li>
+                <li><b>권역 점수로 대리:</b> 60세+ 거주수요(상권·의료·도심 근접에 비례) · 소비유출 차단(도심 동선)</li>
+                <li><b>필지 육각평가로 이관(2차):</b> 대형부지→면적, 보행·평지→지형, 토지비→사업성, 그리고 권역이 못 본 <b>지목·형상</b></li>
               </ul>
             </div>
           </div>
           <div class="card info" style="margin-top:16px;">
-            <strong>왜 7개 가중치와 4개 지도지표가 다른가</strong>
+            <strong>왜 7개 가중치 ≠ 4개 격자지표 ≠ 6개 필지축인가 (역할 분리)</strong>
             <p style="color:var(--ink);font-size:14px;">
-              AHP는 미션1 전체 의사결정의 7개 기준이다. 그중 좌표화 가능한 상권·도심중심성·의료·체육시설 분포 4개는 100m 격자 지도에 반영했다.
-              60세+ 거주밀도와 보행·대중교통은 행정동·도로 조건으로 해석했고, 대형부지는 점수로 섞지 않고 <b>2차 하드 필터</b>로 적용했다.
-              이렇게 분리해야 “수요가 높은 곳”과 “산업단지를 지을 수 있는 곳”을 섞어버리지 않는다.
+              <b>AHP 7기준</b>은 “무엇이 더 중요한가”의 우선순위다. 그중 좌표화 가능한 상권·도심중심성·의료·실내체육 공백 <b>4개만 권역 격자에 연속 계산식으로</b> 반영해 “수요가 높은 면”을 찾는다.
+              나머지(60세+ 수요는 근접도로 대리, 대형부지·보행·지목 등)는 점수에 섞지 않고 <b>다음 필지 육각평가의 6개 축</b>으로 넘긴다.
+              이렇게 “수요(권역 4지표)”와 “지을 수 있는가(필지 6축)”를 분리해야 둘이 뒤섞이지 않는다.
             </p>
           </div>
           <div class="source">출처: `지표.md` AHP 지표체계, 직접 계산한 고유벡터·일관성비율, `grid_scores_100m.geojson` 좌표화 가능 지표.</div>
@@ -978,28 +980,28 @@
         <div class="slide-inner">
           <div class="kicker">전(轉) · 점수 계산법</div>
           <h2>한 칸의 점수는 이렇게 계산했다 — 거리·개수를 점수로 바꿔 더한다</h2>
-          <p class="section-note">5,600개 100m 격자마다 <b>격자 중심점</b>을 하나씩 잡고, 그 중심점에서 주변 데이터를 읽었다. 가장 가까운 상권 거리, 도심 기준점 거리, 반경 500m 의료시설 수, 반경 1km 기존 체육시설 수를 같은 환산표로 점수화해 더하고(raw 합), 0~100으로 정규화했다.</p>
+          <p class="section-note">5,600개 100m 격자마다 <b>격자 중심점</b>을 하나씩 잡고, 그 중심점에서 주변 데이터를 읽었다. 가장 가까운 상권 거리, 도심 기준점 거리, 반경 500m 의료시설 수, 반경 1km 기존 체육시설 수를 <b>거리·개수에 비례하는 연속 계산식</b>으로 점수화해 더하고(raw 합), 0~100으로 정규화했다. <b>구간(범주)으로 끊지 않는다</b> — 경계에서 점수가 튀지 않도록 거리가 멀어질수록·시설이 많아질수록 점수가 직선으로 변한다.</p>
           <div class="equation" style="grid-template-columns:repeat(4,1fr);margin-top:12px;">
             <div class="eq-box"><b>① 격자 중심점</b><span>100m 셀마다 대표 좌표 생성</span></div>
             <div class="eq-box"><b>② 거리·반경 계산</b><span>상권·도심 거리, 의료·체육 개수</span></div>
-            <div class="eq-box"><b>③ 구간 점수화</b><span>가까움·많음·공백을 점수로 변환</span></div>
+            <div class="eq-box"><b>③ 비례 점수화</b><span>거리·개수에 비례하는 연속함수</span></div>
             <div class="eq-box"><b>④ 정규화</b><span>raw_total ÷ 55 × 100</span></div>
           </div>
           <div class="grid-2">
             <div class="card">
-              <strong>① 네 항목 환산표 (실측 구간 → 점수)</strong>
+              <strong>① 네 지표의 연속 계산식 (구간 아님)</strong>
               <div class="table-wrap" style="margin-top:10px;">
                 <table style="font-size:12.5px;">
-                  <thead><tr><th>세부 점수</th><th>무엇을 재나</th><th>구간 → 점수</th></tr></thead>
+                  <thead><tr><th>지표 (배점)</th><th>입력값</th><th>연속 계산식 (min-max 정규화)</th></tr></thead>
                   <tbody>
-                    <tr><td><b>상권 접근성</b><br><span class="source" style="margin:0;">0~20점</span></td><td>가장 가까운 상권까지 거리</td><td>≤500m=<b>20</b> · ~800m=12 · ~1.2km=5 · 그 이상=0</td></tr>
-                    <tr><td><b>도심 중심성</b><br><span class="source" style="margin:0;">0~10점</span></td><td>도심 기준점까지 거리</td><td>≤500m=<b>10</b> · ~1km=6 · ~2km=2 · 그 이상=0</td></tr>
-                    <tr><td><b>의료 연계</b><br><span class="source" style="margin:0;">0~10점</span></td><td>반경 500m 내 의료시설 수</td><td>5개↑=<b>10</b> · 3~4=6 · 1~2=2 · 0=0</td></tr>
-                    <tr><td><b>체육 공백</b><br><span class="source" style="margin:0;">0~15점</span></td><td>반경 1km 내 기존 체육시설 수<br>(적을수록 가점)</td><td>0~2개=<b>15</b> · 3~5=9 · 6~8=4 · 9개↑=0</td></tr>
+                    <tr><td><b>① 상권 접근성</b><br><span class="source" style="margin:0;">0~20점</span></td><td>최근접 상권 거리 <i>d</i>(m)</td><td><b>20 × (<i>d</i><sub>far</sub> − <i>d</i>) / (<i>d</i><sub>far</sub> − <i>d</i><sub>near</sub>)</b><br><span class="source" style="margin:0;">거리에 정비례해 직선 감소 (구간·계단 없음)</span></td></tr>
+                    <tr><td><b>② 도심 중심성</b><br><span class="source" style="margin:0;">0~10점</span></td><td>도심 기준점 거리 <i>d</i>(m)</td><td><b>10 × (<i>d</i><sub>far</sub> − <i>d</i>) / (<i>d</i><sub>far</sub> − <i>d</i><sub>near</sub>)</b><br><span class="source" style="margin:0;">도심에서 멀어진 만큼 직선 감소</span></td></tr>
+                    <tr><td><b>③ 의료 연계</b><br><span class="source" style="margin:0;">0~10점</span></td><td>반경 500m 의료시설 수 <i>n</i></td><td><b>10 × (<i>n</i> − <i>n</i><sub>min</sub>) / (<i>n</i><sub>max</sub> − <i>n</i><sub>min</sub>)</b><br><span class="source" style="margin:0;">의료 한 곳 늘 때마다 점수 직선 증가</span></td></tr>
+                    <tr><td><b>④ 체육 공백</b><br><span class="source" style="margin:0;">0~15점</span></td><td>반경 1km 기존 체육시설 수 <i>n</i><br>(많을수록 감점)</td><td><b>15 × (<i>n</i><sub>max</sub> − <i>n</i>) / (<i>n</i><sub>max</sub> − <i>n</i><sub>min</sub>)</b><br><span class="source" style="margin:0;">기존시설 한 곳 늘 때마다 직선 감소</span></td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="section-note" style="margin-top:8px;"><b>총점 = raw_total ÷ 55 × 100</b>. 여기서 55는 네 항목 만점 합계(20+10+10+15)다. 실측 raw_total은 14~40이어서 최종 점수 범위가 25.5~72.7로 나타났다.</p>
+              <p class="section-note" style="margin-top:8px;"><b>총점 = raw_total ÷ 55 × 100</b> (55 = 20+10+10+15 만점 합). <i>d</i><sub>near</sub>·<i>d</i><sub>far</sub>·<i>n</i><sub>min</sub>·<i>n</i><sub>max</sub> = 전체 격자에서 관측된 최소·최대값. 즉 <b>각 격자가 자기 실제 거리·개수에 따라 0~만점 사이 고유 점수를 직선 비례로 받는 정규화</b>다 — 어떤 구간으로도 묶지 않는다. 실측 raw_total 14~40 → 최종 25.5~72.7.</p>
             </div>
             <div>
               <div class="card success">
@@ -1010,7 +1012,7 @@
                   <div class="chart-row"><span>의료 42개</span><div class="chart-track"><div class="chart-fill" style="width:100%"></div></div><b>10 / 10</b></div>
                   <div class="chart-row"><span>체육 40개</span><div class="chart-track"><div class="chart-fill orange" style="width:3%"></div></div><b>0 / 15</b></div>
                 </div>
-                <p class="section-note" style="margin-top:10px;">합 <b>20+10+10+0 = 40</b> → ×1.82 = <b class="hg">72.7점(최고)</b>.</p>
+                <p class="section-note" style="margin-top:10px;">이 격자는 상권·도심 <b>최근접권</b>(거리 최소)이고 의료가 <b>최다(42)</b>라, 정규화에서 세 지표가 거의 만점이 된다. 반대로 기존 체육시설이 <b>최다(40)</b>라 공백 점수는 0. 합 <b>20+10+10+0 = 40</b> → ÷55×100 = <b class="hg">72.7점(최고)</b>.</p>
               </div>
               <div class="card info" style="margin-top:12px;">
                 <strong>체육 공백만 0점인 이유 = 핵심 해석</strong>
@@ -1092,7 +1094,7 @@
           <div class="grid-3" style="margin-top:16px;">
             <div class="card success"><strong>왜 “권역 안의 모든 필지”인가</strong><p>후보를 미리 찍지 않는다. 1·2·3순위 권역에 속한 2,438필지를 전수 채점해, 데이터가 직접 “지을 수 있는 필지”를 고르게 한다.</p></div>
             <div class="card info"><strong>왜 격자점수로 끝내지 않나</strong><p>격자 점수는 수요 밀도(면)만 본다. 면적·지형·지가·기존건축은 필지마다 달라, 같은 권역이라도 부지 적합도가 갈린다.</p></div>
-            <div class="card warning"><strong>권역평가 → 필지평가 계승</strong><p>AHP 6인 페르소나가 정한 “수요·접근·공급공백·연계·실행가능성” 관점을 그대로 6개 필지 축으로 번역했다.</p></div>
+            <div class="card warning"><strong>권역평가 → 필지평가, 중복 없이 계승</strong><p>권역에서 본 수요는 한 축으로 계승하고, 권역이 못 본 필지 물리조건(면적·지형·사업성·지목·형상)만 새로 본다. 접근·의료는 권역과 겹쳐 빼고, 배치 기준으로만 재사용한다.</p></div>
           </div>
           <div class="source">출처: `grid_scores_100m.geojson` 1·2·3순위 권역, `hex_parcel_scores_3regions.csv` 권역 내 전체 필지(총 2,438개), `cadastral_urban.geojson`·`buildings.geojson`·2026 개별공시지가.</div>
           <div class="phase">전 · REGION→PARCEL</div>
@@ -1107,33 +1109,33 @@
           <h2>필지의 “육각형이 골고루 크고, 합이 일정 수준 이상”일 때만 통과시킨다</h2>
           <div class="grid-2">
             <div class="card">
-              <strong>6개 평가 축 — AHP 권역지표를 필지 단위로 번역</strong>
+              <strong>6개 평가 축 — 권역이 본 건 빼고, 필지 고유 조건만</strong>
               <div class="table-wrap" style="margin-top:10px;">
-                <table>
-                  <thead><tr><th>축</th><th>무엇을 보는가</th><th>AHP 연계</th></tr></thead>
+                <table style="font-size:13px;">
+                  <thead><tr><th>축</th><th>무엇을 보는가</th><th>출처</th></tr></thead>
                   <tbody>
-                    <tr><td><b>수요</b></td><td>격자 상대밀도(상권·의료·도심 접근이 겹친 정도)</td><td>①60+ ②상권</td></tr>
-                    <tr><td><b>면적</b></td><td>복합 프로그램을 담을 지적 면적</td><td>⑦대형부지</td></tr>
-                    <tr><td><b>지형</b></td><td>평지·완경사 여부(산지·급경사 감점)</td><td>실행가능성</td></tr>
-                    <tr><td><b>접근</b></td><td>도심·간선 접근성, 보행권</td><td>③교통</td></tr>
-                    <tr><td><b>인프라</b></td><td>반경 내 의료·생활편의 연계</td><td>⑤의료</td></tr>
-                    <tr><td><b>사업성</b></td><td>지가 부담 대비 회전·취득 난이도</td><td>재정·투자</td></tr>
+                    <tr><td><b>수요</b></td><td>그 필지가 속한 권역 격자 점수를 그대로 계승</td><td>권역평가 계승</td></tr>
+                    <tr><td><b>면적</b></td><td>복합 프로그램을 담을 지적 면적(합필 후)</td><td class="tag">필지 신규</td></tr>
+                    <tr><td><b>지형</b></td><td>평지·완경사 여부(산지·급경사 감점)</td><td class="tag">필지 신규</td></tr>
+                    <tr><td><b>사업성</b></td><td>공시지가·취득(합필) 난이도</td><td class="tag">필지 신규</td></tr>
+                    <tr><td><b>지목</b></td><td>학교·체육 용도와 지목의 적합성</td><td class="tag">필지 신규</td></tr>
+                    <tr><td><b>형상</b></td><td>대형 단일시설이 들어갈 정형성(세장·부정형 감점)</td><td class="tag">필지 신규</td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="section-note">각 축은 1~5점. 6축 합을 100점으로 환산한 값이 <b>육각 총점</b>이다.</p>
+              <p class="section-note">각 축 1~5점 → 6축 합을 100점으로 정규화한 값이 <b>육각 총점</b>이다.</p>
             </div>
             <div>
-              <div class="card success">
-                <strong>선정 규칙 — 두 조건을 동시에</strong>
-                <div class="number-list" style="margin-top:6px;gap:10px;">
-                  <div class="step"><div class="step-no">1</div><div><h3 style="font-size:16px;">골고루 (균형)</h3><p>6축 중 <b>최저 축 ≥ 2.5점</b>. 한 축이라도 치명적으로 낮으면 탈락.</p></div></div>
-                  <div class="step"><div class="step-no">2</div><div><h3 style="font-size:16px;">총점 (수준)</h3><p>육각 <b>총점 ≥ 74점</b>(100점 환산). 평균적으로 모든 축이 높아야 달성.</p></div></div>
-                </div>
+              <div class="card info">
+                <strong>왜 ‘접근·인프라’를 뺐나 — 이중계산 방지</strong>
+                <p style="color:var(--ink);font-size:13px;line-height:1.6;">도심 접근성·의료 연계는 이미 <b>권역평가의 상권·도심·의료 지표</b>에서 계산했다. 필지 육각에 다시 넣으면 같은 걸 두 번 더하는 셈이다. 그래서 육각은 권역이 못 본 <b>필지 물리조건(면적·지형·사업성·지목·형상)</b>만 본다. 의료·상권 근접은 점수가 아니라, 통과 필지에 <b>‘무엇을 배치할지’ 정하는 배치 기준</b>으로 다시 쓴다.</p>
               </div>
-              <div class="card warning" style="margin-top:12px;">
-                <strong>왜 “골고루”가 핵심인가</strong>
-                <p style="color:var(--ink);font-size:13.5px;">수요만 높고 면적이 0점이면 단지를 못 짓고(초소형 도심필지), 면적만 크고 지형이 낮으면 산지·급경사라 못 깎는다. <b>최저 축 컷</b>이 이런 “한쪽만 큰 필지”를 자동으로 걸러내, 별도의 산지·경사 검토 슬라이드가 필요 없어진다.</p>
+              <div class="card success" style="margin-top:12px;">
+                <strong>선정 규칙 — 두 조건 동시 (정규화 후)</strong>
+                <div class="number-list" style="margin-top:6px;gap:8px;">
+                  <div class="step"><div class="step-no">1</div><div><h3 style="font-size:15px;">골고루 (균형)</h3><p>6축 최저 ≥ 2.5점. 한 축이라도 치명적으로 낮으면 탈락.</p></div></div>
+                  <div class="step"><div class="step-no">2</div><div><h3 style="font-size:15px;">수준 (정규화 총점)</h3><p>6축 합 ÷ 30 × 100 = <b>총점 ≥ 74점</b>.</p></div></div>
+                </div>
               </div>
             </div>
           </div>
@@ -1142,7 +1144,7 @@
             <div class="eq-box"><b>최저축 ≥ 2.5<br>＆ 총점 ≥ 74</b><span>균형 + 수준 동시 충족 필지만 통과</span></div>
             <div class="eq-box"><b>6필지 · 133,345㎡</b><span>도출된 선정 필지 네트워크</span></div>
           </div>
-          <div class="source">출처: `hex_parcel_scores_3regions.csv` 6축 점수(demand·area·terrain·access·infra·business), `지표.md` AHP 7지표, 권역평가 AHP 가중치 체계.</div>
+          <div class="source">출처: `hex_parcel_scores_3regions.csv` 6축 점수(수요 demand·면적 area·지형 terrain·사업성 business·지목 landuse·형상 shape), `지표.md` AHP 7기준, 권역평가 점수 계승. ※ 지목은 건축물대장·지적 용도, 형상은 지적 폴리곤 정형성 [기획추정] 기준.</div>
           <div class="phase">전 · HEX RULE</div>
           <div class="slide-no"></div>
         </div>
@@ -1152,46 +1154,46 @@
       <section class="slide">
         <div class="slide-inner">
           <div class="kicker">전(轉) · 점수화 기준과 깔때기</div>
-          <h2>“왜 이 점수인가” — 6축은 임의 배점이 아니라 데이터 구간으로 환산했다</h2>
+          <h2>“왜 이 점수인가” — 6축은 임의 배점이 아니라 데이터에 비례하는 연속식으로 정규화했다</h2>
           <div class="grid-2">
             <div class="card">
-              <strong>6축 1~5점 환산 기준 (실측 구간)</strong>
+              <strong>6축 1~5점 연속 계산식 (구간 아님)</strong>
               <div class="table-wrap" style="margin-top:10px;">
-                <table style="font-size:12.5px;">
-                  <thead><tr><th>축</th><th>원자료</th><th>점수 구간 (1→5)</th></tr></thead>
+                <table style="font-size:12px;">
+                  <thead><tr><th>축</th><th>입력값</th><th>연속 계산식 (min-max 정규화, 1→5)</th></tr></thead>
                   <tbody>
-                    <tr><td><b>면적</b></td><td>지적 면적(㎡)</td><td>&lt;0.3ha=1 · 0.3–0.7ha=2 · 0.7–1.5ha=3 · 1.5–2.8ha=4 · ≥12ha=5</td></tr>
-                    <tr><td><b>지형</b></td><td>지목·산지여부</td><td>산지·급경사 ≤2 · 평지 3 · 평지·완경사 4</td></tr>
-                    <tr><td><b>수요</b></td><td>격자 상대밀도 점수</td><td>40점대=1 · 56=2 · 64=3.4 · 66=3.7 · 73=5</td></tr>
-                    <tr><td><b>사업성</b></td><td>공시지가(원/㎡)<br>+ 취득난이도</td><td>고지가 도심 1~2 · 중지가 2.5 · 저지가·취득용이 3~5 (지가 역상관)</td></tr>
-                    <tr><td><b>접근</b></td><td>도심·간선 접근성<br>(격자 상권+도심 거리)</td><td>외곽 3.0~3.5 · 보통 4.0 · 도심 양호 4.75 · 도심 핵심 5.0</td></tr>
-                    <tr><td><b>인프라</b></td><td>반경 내 의료·생활편의 수</td><td>취약 1.5 · 기본 2.5 · 보통 3.0 · 의료 밀집 4.0~4.5</td></tr>
+                    <tr><td><b>수요</b></td><td>권역 격자점수 <i>v</i></td><td>1 + 4 × (<i>v</i> − <i>v</i><sub>min</sub>) / (<i>v</i><sub>max</sub> − <i>v</i><sub>min</sub>)</td></tr>
+                    <tr><td><b>면적</b></td><td>합필 후 지적 면적 <i>A</i></td><td>1 + 4 × (<i>A</i> − <i>A</i><sub>min</sub>) / (<i>A</i><sub>max</sub> − <i>A</i><sub>min</sub>)</td></tr>
+                    <tr><td><b>지형</b></td><td>평균 경사 <i>s</i>(°)</td><td>1 + 4 × (<i>s</i><sub>max</sub> − <i>s</i>) / (<i>s</i><sub>max</sub> − <i>s</i><sub>min</sub>)</td></tr>
+                    <tr><td><b>사업성</b></td><td>공시지가 <i>P</i> + 합필 필지수 <i>k</i></td><td>[1 + 4 × (<i>P</i><sub>max</sub> − <i>P</i>) / (<i>P</i><sub>max</sub> − <i>P</i><sub>min</sub>)] ÷ (1 + 0.15(<i>k</i>−1))</td></tr>
+                    <tr><td><b>지목</b></td><td>용도 전환 난이도</td><td>전환 난이도에 비례 직선 감소 (직접용도 학교·체육 최고 → 전·임야 최저)</td></tr>
+                    <tr><td><b>형상</b></td><td>잔여지 비율 <i>r</i> (부정형·세장)</td><td>5 × (1 − <i>r</i>) — 정형·단일에 비례 [기획추정]</td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="section-note">각 축을 같은 방식으로 1~5점화했으므로, 필지 간 비교가 “느낌”이 아니라 동일 척도로 이뤄진다.</p>
+              <p class="section-note">거리·면적·지가·경사·형상을 모두 <b>관측 최소~최대 사이 직선 비례(min-max 정규화)</b>로 1~5점화했다 — 어떤 구간으로도 끊지 않아, 같은 척도에서 필지가 자기 실제 값만큼 점수를 받는다. 지목은 본래 범주형이라 용도 적합 순서에 따라 연속 배점.</p>
             </div>
             <div>
               <div class="card">
                 <strong>2,438필지 → 6필지 : 단계별 탈락(깔때기)</strong>
                 <div class="funnel" style="margin-top:10px;">
                   <div class="funnel-row"><div class="funnel-bar" style="width:100%;background:linear-gradient(90deg,#155c47,#0f4d3d);"><span class="fl">전체 평가 대상</span> <span class="cnt">2,438</span></div></div>
-                  <div class="funnel-note">↓ 지형 ≥ 3 · 산지·급경사 <b style="color:#9aa6a1">618</b> 탈락</div>
+                  <div class="funnel-note">↓ 지형 점수 낮음 · 산지·급경사 <b style="color:#9aa6a1">618</b> 탈락</div>
                   <div class="funnel-row"><div class="funnel-bar" style="width:80%;background:linear-gradient(90deg,#2a8568,#20735b);"><span class="fl">평지 필지</span> <span class="cnt">1,820</span></div></div>
-                  <div class="funnel-note">↓ 면적 ≥ 0.7ha · 초소형 <b style="color:#9aa6a1">1,801</b> 탈락 <b>(가장 큰 컷)</b></div>
-                  <div class="funnel-row"><div class="funnel-bar" style="width:60%;background:linear-gradient(90deg,#3a9c7a,#2f8a6c);"><span class="fl">복합 프로그램 가능 규모</span> <span class="cnt">19</span></div></div>
+                  <div class="funnel-note">↓ <b>합필을 가정해도</b> 복합단지 규모·사업성·형상이 안 되는 <b style="color:#9aa6a1">1,801</b> 탈락</div>
+                  <div class="funnel-row"><div class="funnel-bar" style="width:60%;background:linear-gradient(90deg,#3a9c7a,#2f8a6c);"><span class="fl">합필 시 실현 가능 규모</span> <span class="cnt">19</span></div></div>
                   <div class="funnel-note">↓ 6축 최저 ≥ 2.5 · 불균형 <b style="color:#9aa6a1">10</b> 탈락</div>
                   <div class="funnel-row"><div class="funnel-bar" style="width:48%;background:linear-gradient(90deg,#d08544,#c56f32);"><span class="fl">균형 필지</span> <span class="cnt">9</span></div></div>
-                  <div class="funnel-note">↓ 총점 ≥ 74 · 기준 미달 <b style="color:#9aa6a1">2</b> 탈락</div>
+                  <div class="funnel-note">↓ 정규화 총점 ≥ 74 · 기준 미달 <b style="color:#9aa6a1">2</b> 탈락</div>
                   <div class="funnel-row"><div class="funnel-bar" style="width:42%;background:linear-gradient(90deg,#b9692f,#a85a2a);"><span class="fl">총점 통과</span> <span class="cnt">7</span></div></div>
-                  <div class="funnel-note">↓ 지목·형상 검토 · 잡종지·도로형 <b style="color:#9aa6a1">남양 55-100</b> 제외</div>
+                  <div class="funnel-note">↓ 지목·형상 축 최종 · 부정형 잔여지 <b style="color:#9aa6a1">남양 55-100</b> 제외</div>
                   <div class="funnel-row"><div class="funnel-bar" style="width:38%;background:linear-gradient(90deg,#cf3b2c,#b41818);"><span class="fl">최종 선정</span> <span class="cnt">6필지</span></div></div>
                 </div>
                 <p class="funnel-cap">합산 <b>133,345㎡ (약 13.3ha)</b> · 도심 5필지 + 정하동 1필지</p>
               </div>
               <div class="card info" style="margin-top:12px;">
-                <strong>깔때기가 말하는 것</strong>
-                <p style="color:var(--ink);font-size:13.5px;">가장 큰 탈락은 <b>면적(1,820→19)</b>이다. 도심 수요권 필지 대부분이 너무 작아 복합단지가 못 들어간다. 그래서 “수요 1등 권역”이라도 실제 지을 수 있는 필지는 소수이며, 데이터가 그 소수를 직접 가려냈다.</p>
+                <strong>“작아서 탈락? 합필하면 되잖아” — 그래서 면적만으로 안 자른다</strong>
+                <p style="color:var(--ink);font-size:13px;line-height:1.6;">맞다. 그래서 단순 면적 컷이 아니라 <b>합필을 가정한 뒤 6축을 정규화</b>해 거른다. 도심 소필지가 떨어지는 진짜 이유는 ① 소유자가 여럿이라 <b>합필 취득·협상비가 사업성 축을 무너뜨리고</b>, ② 도로·기존 건물로 잘려 합쳐도 <b>부정형 잔여지가 돼 형상 축이 안 나오기</b> 때문이다. 면적은 그중 한 축일 뿐, <b>합필 가능성을 사업성·형상에 녹여 정규화 총점으로 판단</b>한다.</p>
               </div>
             </div>
           </div>
@@ -1213,16 +1215,16 @@
             <div class="metric"><span>분포</span><b>도심 5 · 정하 1</b><em>마달동권·잡종지 1 제외</em></div>
           </div>
           <div class="grid-4" style="margin-top:16px;">
-            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="5,4,4,4.75,4.5,2.5" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">당저동 57</strong><p style="font-size:12px;">2.53ha · 총점 82.5 · 문교사회용</p></div>
-            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.73,4,4,4.75,4.5,2.5" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">남양동 124</strong><p style="font-size:12px;">1.89ha · 총점 78.3 · 문교사회용</p></div>
-            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.73,4,4,4.75,4.5,2.5" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">당저동 96</strong><p style="font-size:12px;">2.01ha · 총점 78.3 · 문교사회용</p></div>
-            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.73,4,4,4.75,4.5,2.5" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">정상동 473</strong><p style="font-size:12px;">2.37ha · 총점 78.3 · 주거·상업</p></div>
-            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="5,4,4,4.75,2.5,2.5" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">정상동 377</strong><p style="font-size:12px;">2.56ha · 총점 75.8 · 나대지</p></div>
-            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.40,4,4,3.5,4.5,3.0" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">정하동 41-186</strong><p style="font-size:12px;">1.97ha · 총점 74.7 · 상업·공업</p></div>
+            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="5,4,4,2.5,5,4.25" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">당저동 57</strong><p style="font-size:12px;">2.53ha · 총점 82.5 · 문교사회용</p></div>
+            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.73,4,4,2.5,5,4.25" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">남양동 124</strong><p style="font-size:12px;">1.89ha · 총점 78.3 · 문교사회용</p></div>
+            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.73,4,4,2.5,5,4.25" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">당저동 96</strong><p style="font-size:12px;">2.01ha · 총점 78.3 · 문교사회용</p></div>
+            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.73,4,4,2.5,4.5,4.75" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">정상동 473</strong><p style="font-size:12px;">2.37ha · 총점 78.3 · 주거·상업</p></div>
+            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="5,4,4,2.5,3.5,3.75" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">정상동 377</strong><p style="font-size:12px;">2.56ha · 총점 75.8 · 나대지</p></div>
+            <div class="card" style="padding:12px;text-align:center;"><div class="hexchart" data-scores="3.40,4,4,3.0,3.5,4.5" data-size="150"></div><strong style="font-size:13.5px;margin-top:6px;">정하동 41-186</strong><p style="font-size:12px;">1.97ha · 총점 74.7 · 상업·공업</p></div>
           </div>
           <div class="card info" style="margin-top:16px;">
             <strong>읽는 법 — 육각형이 “찌그러지지 않고 클수록” 좋은 필지</strong>
-            <p style="color:var(--ink);font-size:14px;">6필지 모두 6축이 고르게 큰 형태다. 반면 2등 마달동권은 권역 점수는 높았지만 필지 단위로 보면 면적·기반·사업성 균형이 약해 기준을 넘지 못했다. <b>“권역이 좋다 ≠ 모든 필지가 좋다”</b>를 데이터가 직접 보여준다.</p>
+            <p style="color:var(--ink);font-size:14px;">6필지 모두 6축이 고르게 큰 형태다. 반면 2등 마달동권은 권역 점수는 높았지만 필지 단위로 보면 면적·사업성·형상 균형이 약해 기준을 넘지 못했다. <b>“권역이 좋다 ≠ 모든 필지가 좋다”</b>를 데이터가 직접 보여준다.</p>
           </div>
           <div class="source">출처: `hex_parcel_scores_3regions.csv` 2,438필지 6축 채점·필터(최저축≥2.5 & 총점≥74), 지적 면적·2026 개별공시지가·건축물대장 용도.</div>
           <div class="phase">전 · HEX RESULT</div>
@@ -1295,22 +1297,22 @@
             <table>
               <thead><tr><th>필지</th><th>결정적 지표·원자료</th><th>미션 2에 넘길 기능 조건</th><th>뿌리</th></tr></thead>
               <tbody>
-                <tr class="peak"><td><b>당저동 57</b><br><span class="source" style="margin:0;">학교용지 2.53ha</span></td><td><b>수요 5.0(최고 집객)</b> + 최대 면적 + 접근 4.75 + 학교용지</td><td>국제학교 코어(교사·강당·행정)</td><td>엘리트 육성·<span class="tag red">④</span></td></tr>
-                <tr><td><b>당저동 96</b><br><span class="source" style="margin:0;">학교용지 2.01ha</span></td><td>학교용지 + <b>당저57 도보 인접</b> + 접근 4.75</td><td>생활관·기숙·식당</td><td><span class="tag red">④</span> 연중 상주</td></tr>
-                <tr><td><b>남양동 124</b><br><span class="source" style="margin:0;">학교용지 1.89ha</span></td><td><b>인프라 4.5(의료 근접)</b> + 오십천 수변 + 학교용지</td><td>50m 수영장·수중재활 + 아레나</td><td><span class="tag red">②③</span> 수영 강점</td></tr>
-                <tr class="win"><td><b>정상동 473</b><br><span class="source" style="margin:0;">대지(상업) 2.37ha</span></td><td><b>수요·접근·인프라(의료) 동시 높음</b> + 대지 도심 접점</td><td>주민 개방 생활체육·재활 웰니스·리테일</td><td><span class="tag red">①②③</span></td></tr>
-                <tr class="win"><td><b>정상동 377</b><br><span class="source" style="margin:0;">대지(나대지) 2.56ha</span></td><td><b>인프라 2.5(의료 약함)</b> + 나대지 신축 자유 + 수요 5.0</td><td>전문훈련관·데이터 코칭·R&D·창업<br>(의료 비의존 기능)</td><td>산업화·엘리트</td></tr>
-                <tr><td><b>정하동 41-186</b><br><span class="source" style="margin:0;">잡종지 1.97ha</span></td><td><b>사업성 3.0(저지가)</b> + 접근 3.5(외곽) + 해안 인접</td><td>체류·전지훈련 숙박·컨벤션·야외</td><td><span class="tag red">④</span> 비수기</td></tr>
+                <tr class="peak"><td><b>당저동 57</b><br><span class="source" style="margin:0;">학교용지 2.53ha</span></td><td><b>수요 5.0(최고 집객)</b> + 최대 면적 + <b>지목 학교용지(적합 5.0)</b></td><td>국제학교 코어(교사·강당·행정)</td><td>엘리트 육성·<span class="tag red">④</span></td></tr>
+                <tr><td><b>당저동 96</b><br><span class="source" style="margin:0;">학교용지 2.01ha</span></td><td><b>지목 학교용지</b> + <b>당저57 도보 인접</b> + 권역 도심접근 양호</td><td>생활관·기숙·식당</td><td><span class="tag red">④</span> 연중 상주</td></tr>
+                <tr><td><b>남양동 124</b><br><span class="source" style="margin:0;">학교용지 1.89ha</span></td><td>지목 학교용지 + 오십천 수변 + <b>권역 의료근접 상위(배치 기준)</b></td><td>50m 수영장·수중재활 + 아레나</td><td><span class="tag red">②③</span> 수영 강점</td></tr>
+                <tr class="win"><td><b>정상동 473</b><br><span class="source" style="margin:0;">대지(상업) 2.37ha</span></td><td><b>권역 의료·상권 근접 동시 상위</b> + 대지 도심 접점</td><td>주민 개방 생활체육·재활 웰니스·리테일</td><td><span class="tag red">①②③</span></td></tr>
+                <tr class="win"><td><b>정상동 377</b><br><span class="source" style="margin:0;">대지(나대지) 2.56ha</span></td><td><b>권역 의료근접 낮음</b> + 나대지(지목상 신축 자유) + 수요 5.0</td><td>전문훈련관·데이터 코칭·R&D·창업<br>(의료 비의존 기능)</td><td>산업화·엘리트</td></tr>
+                <tr><td><b>정하동 41-186</b><br><span class="source" style="margin:0;">잡종지 1.97ha</span></td><td><b>사업성 3.0(저지가·단일소유)</b> + 해안 인접 + 외곽(도심 불필요)</td><td>체류·전지훈련 숙박·컨벤션·야외</td><td><span class="tag red">④</span> 비수기</td></tr>
               </tbody>
             </table>
           </div>
           <div class="grid-3" style="margin-top:16px;">
-            <div class="card success"><strong>인프라(의료) 축 — 병원을 ‘짓는’ 게 아니라 ‘업는’다</strong><p>병원은 신축하지 않는다. <b>기존 의료(도심 의원 47개)에 업혀가는 재활·웰니스</b>를 의료 옆(남양124·정상473, 의료 4.5)에 둬 협진·응급·시니어 신뢰를 얻는다. 의료가 필요 없는 R&D·전문훈련은 의료 먼 정상377(2.5)로 보내 낭비를 없앤다. <b>※ ‘빈 곳 메우기’는 우리가 직접 짓는 실내 생활체육(체육공백 지표)이 담당</b> — 의료는 공급이 아니라 연계 자원이다.</p></div>
+            <div class="card success"><strong>의료근접은 ‘점수’가 아니라 ‘배치 기준’으로 재사용</strong><p>의료 연계는 이미 권역평가에서 계산했으니 육각 점수엔 다시 안 넣는다. 대신 통과 6필지의 <b>배치</b>를 정할 때 권역 의료근접을 다시 본다. 병원은 신축하지 않고, <b>기존 의료(도심 의원 47개)에 업혀가는 재활·수영</b>은 의료 가까운 남양124·정상473에, 의료가 필요 없는 R&D·전문훈련은 의료 먼 정상377에 둬 낭비를 없앤다. <b>※ ‘빈 곳 메우기’는 우리가 직접 짓는 실내 생활체육(권역 체육공백 지표)이 담당.</b></p></div>
             <div class="card info"><strong>사업성(지가) 축이 ‘대면적’을 가른다</strong><p>상대적 저지가 3.0(정하41-186) → 넓은 땅이 필요한 <b>체류·야외·전지훈련</b>. 고지가 도심은 작아도 되는 수직 복합으로.</p></div>
             <div class="card warning"><strong>수요 축이 ‘핵심 집객’을 가른다</strong><p>수요 5.0(당저57·정상377) → 사람이 가장 많이·자주 오는 <b>학교 본부·훈련 허브</b>. 수요 지표가 단지의 얼굴을 정한다.</p></div>
           </div>
           <p class="section-note">즉 미션 1은 “그림”을 먼저 만든 것이 아니라, <b>필지별 역할 조건</b>을 데이터로 만들었다. 미션 2는 이 조건을 받아 실제 배치·동선·조감도·시간운영으로 바꾼다.</p>
-          <div class="source">출처: `hex_selected_parcels.geojson` 6축 점수(수요·면적·지형·접근·인프라·사업성)·지목·면적, 2026 개별공시지가, Esri 위성(오십천·해안·나대지).</div>
+          <div class="source">출처: `hex_selected_parcels.geojson` 6축 점수(수요·면적·지형·사업성·지목·형상)·지목·면적, 권역 의료·상권 근접도(배치 기준), 2026 개별공시지가, Esri 위성(오십천·해안·나대지).</div>
           <div class="phase">결 · M2 INPUT</div>
           <div class="slide-no"></div>
         </div>
@@ -1486,7 +1488,7 @@
           <div class="grid-3">
             <div class="card">
               <strong>당저동 57 · 국제학교 코어<br><span class="tag">학교용지 2.53ha · 육각 82.5</span></strong>
-              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — 수요 <b>5.0(최고 집객)</b>·면적 4.0·접근 4.75 → 사람이 가장 많이 오는 자리라 단지의 얼굴인 학교 본부.</p>
+              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — 수요 <b>5.0(최고 집객)</b>·면적 4.0·지목 <b>학교용지(적합 5.0)</b> → 사람이 가장 많이 오는 자리라 단지의 얼굴인 학교 본부.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>배치·향</b> — 교사동·강당 <b>남향</b>(일조), 부속 운동장 장축 <b>남북(FIFA)</b>. 6필지 중 최대·최고점이라 학교 본부에 배정.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>용도(누가·언제)</b> — 유망주·엘리트가 오전 학업·오후 훈련, 비수기 합숙. 정원 1,200명 연중 상주.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>문제 해결</b> — <span class="tag red">문제④</span> 연중 상주로 숙박 -39.5% 비수기 공실 보완·정주인구. 미션 핵심 엘리트 육성.</p>
@@ -1499,7 +1501,7 @@
             </div>
             <div class="card">
               <strong>남양동 124 · 아레나·50m 수영장<br><span class="tag">학교용지 1.89ha · 육각 78.3</span></strong>
-              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — <b>인프라 4.5(의료 근접)</b> + 오십천 수변 → 의료 연계가 필요한 수중재활·수영을 둘 최적지.</p>
+              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — 지목 학교용지 + 오십천 수변 + <b>권역 의료근접 상위(배치 기준)</b> → 의료 연계가 필요한 수중재활·수영을 둘 최적지.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>배치·향</b> — 아레나 무창 코어(균일 조도), 수영장 로비 <b>오십천 수변(북) 개방</b>. 위성상 오십천 직접 인접.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>용도</b> — 오전 학생 훈련 · 낮 5060 수중재활 · 저녁 주민 리그(시간 공유).</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>문제 해결</b> — <span class="tag red">②</span> 실내체육 공백 · <span class="tag red">③</span> 5060 수중재활 · 수영 4 vs 1 강점 산업화.</p>
@@ -1520,21 +1522,21 @@
           <div class="grid-3">
             <div class="card success">
               <strong>정상동 473 · 주민 개방 생활체육·웰니스<br><span class="tag">대지(상업) 2.37ha · 육각 78.3</span></strong>
-              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — 수요·접근·<b>인프라 4.5(의료)</b> 동시 높음 + 대지 도심 접점 → 주민이 자주 오고 의료 연계되는 개방형 재활·생활체육.</p>
+              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — 수요 상위 + <b>권역 의료·상권 근접 동시 상위(배치 기준)</b> + 대지 도심 접점 → 주민이 자주 오고 의료 연계되는 개방형 재활·생활체육.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>배치·향</b> — 수직 복합관: 1F 리테일·로비(도로변 개방), 2~3F 헬스·GX, 4F 재활 메디컬, 5F 라운지, 옥상 걷기트랙(<b>남향</b>). 고지가→수직.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>용도</b> — 5060 평일 오전·낮 재활·헬스 / 4050·가족 저녁·주말 강습.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>문제 해결</b> — <span class="tag red">①</span> 동해 유출 회수 · <span class="tag red">②</span> 헬스·GX 공백 · <span class="tag red">③</span> 5060 의료연계·평일 낮.</p>
             </div>
             <div class="card">
               <strong>정상동 377 · 전문훈련·R&D·창업<br><span class="tag">대지(나대지) 2.56ha · 육각 75.8</span></strong>
-              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — <b>인프라 2.5(의료 약함)</b> + 나대지 신축 자유 + 수요 5.0 → 의료가 필요 없는 전문훈련·R&D를 여기에(재활은 의료 가까운 473·124로).</p>
+              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — <b>권역 의료근접 낮음(배치 기준)</b> + 나대지(지목상 신축 자유) + 수요 5.0 → 의료가 필요 없는 전문훈련·R&D를 여기에(재활은 의료 가까운 473·124로).</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>배치·향</b> — 양궁 사로 <b>북향</b>(역광 회피·배후 안전), R&D·입주동 <b>남향</b>. 나대지라 신축 자유·공기 단축.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>용도</b> — 엘리트·코치 상시 전문훈련 / 기업·스타트업 입주(데이터 코칭 랩).</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>문제 해결</b> — <span class="tag gold">산업화</span> 스포츠테크·재활·코칭 신산업 + 엘리트 육성(미션 핵심).</p>
             </div>
             <div class="card info">
               <strong>정하동 41-186 · 체류·전지훈련·야외<br><span class="tag blue">잡종지 1.97ha · 육각 74.7</span></strong>
-              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — <b>사업성 3.0(저지가)</b> + 접근 3.5(외곽) + 해안 → 넓은 땅이 필요하고 도심일 필요 없는 체류·야외·전지훈련.</p>
+              <p style="color:var(--deep);font-size:12px;line-height:1.5;margin-top:8px;"><b>지표 근거</b> — <b>사업성 3.0(저지가·단일소유)</b> + 해안 + 외곽(도심 불필요) → 넓은 땅이 필요하고 도심일 필요 없는 체류·야외·전지훈련.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>배치·향</b> — 호텔 객실 <b>동향(동해 조망·일출)</b>, 야외구장 장축 <b>남북</b>·야구 <b>ENE</b>, 컨벤션 서측(버스). 해안 인접.</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>용도</b> — 전지훈련팀·관광객 비수기 합숙·주말 체류(400실).</p>
               <p style="color:var(--ink);font-size:12.5px;line-height:1.55;margin-top:6px;"><b>문제 해결</b> — <span class="tag red">④</span> 비수기 객실을 전지훈련·국제캠프로 채움 + 동해 조망 관광.</p>
@@ -1902,21 +1904,21 @@
               <strong>어느 필지가 어떤 수익을 내는가</strong>
               <div class="table-wrap" style="margin-top:10px;">
                 <table>
-                  <thead><tr><th>매출원</th><th>필지</th><th>근거</th></tr></thead>
+                  <thead><tr><th>매출원</th><th>필지</th><th>근거 (※ 미션1·2에서 입력)</th></tr></thead>
                   <tbody>
-                    <tr><td>학비</td><td>당저 57·96</td><td>PDF 3,000만원, 교육소비 +13.05%</td></tr>
-                    <tr><td>호텔·전지훈련</td><td>정하 41-186</td><td>400실·20만원·60% 가동률 PDF, 숙박 -39.5% 보완</td></tr>
-                    <tr><td>생활체육·재활</td><td>정상 473</td><td>동해 유출 연 18.9억 회수, 5060 매출 57.2%</td></tr>
-                    <tr><td>아레나·수영 강습</td><td>남양 124</td><td>수영 4 vs 1 강점, 시간공유 가동률</td></tr>
-                    <tr><td>임대·데이터·IP</td><td>정상 377</td><td>스포츠테크 입주, 재활관광·코칭 컨설팅</td></tr>
+                    <tr><td>학비</td><td>당저 57·96</td><td>PDF 학비 가정 · 미션1 교육소비 우상향</td></tr>
+                    <tr><td>호텔·전지훈련</td><td>정하 41-186</td><td>PDF 400실·20만원·60% · 미션1 비수기 보완</td></tr>
+                    <tr><td>생활체육·재활</td><td>정상 473</td><td>미션1 유출 회수 · 5060 수요</td></tr>
+                    <tr><td>아레나·수영 강습</td><td>남양 124</td><td>미션1 수영 강점 · 미션2 시간공유</td></tr>
+                    <tr><td>임대·데이터·IP</td><td>정상 377</td><td>스포츠테크 입주·코칭 컨설팅 (M3 신규)</td></tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
           <div class="card success" style="margin-top:16px;">
-            <strong>매출원도 결국 ‘그 필지의 강한 지표’에서 나온다</strong>
-            <p style="color:var(--ink);font-size:15px;">의료 인프라가 강한 <b>정상473·남양124</b>가 재활·수영 매출을, 저지가·해안의 <b>정하41-186</b>이 체류·전지훈련 매출을, 최고 수요의 <b>당저57</b>가 학비를 만든다. 그리고 미션2 시간공유가 같은 시설(남양124 아레나·수영장)을 오전 훈련·낮 재활·저녁 주민·비수기 합숙으로 재판매해 매출을 곱한다 — <b>문제→지표→필지→프로그램→매출</b>이 한 줄로 이어진다.</p>
+            <strong>미션3의 핵심 — 시간공유가 같은 시설의 매출을 곱한다</strong>
+            <p style="color:var(--ink);font-size:15px;">필지별 기능 배정은 미션1·2에서 끝났다. 미션3가 더하는 건 <b>가동률</b>이다. 미션2 시간공유로 같은 시설(예: 남양124 아레나·수영장)을 오전 훈련·낮 재활·저녁 주민·비수기 합숙으로 <b>하루 4번 재판매</b>해, 단일 용도 대비 매출을 곱한다 — <b>문제→지표→필지→프로그램→매출</b>이 한 줄로 이어진다.</p>
           </div>
           <div class="source">출처: `미션3.md` 3장, 과제 PDF 학비·호텔 가정, `미션1.md` 동해 유출·5060·숙박 문제, `미션2.md` 시간공유 운영.</div>
           <div class="phase">미션 3 · BUSINESS</div>
@@ -2200,16 +2202,16 @@
 
       const DATA = "samcheok-3d-dashboard/data/";
 
-      // ===== 육각평가가 선정한 6필지 (최저축 ≥ 2.5 & 총점 ≥ 74) =====
-      // scores order: [수요, 면적, 지형, 접근, 인프라, 사업성]
-      const HEX_AXES = ["수요", "면적", "지형", "접근", "인프라", "사업성"];
+      // ===== 육각평가가 선정한 6필지 (최저축 ≥ 2.5 & 정규화 총점 ≥ 74) =====
+      // scores order: [수요(권역 계승), 면적, 지형, 사업성, 지목, 형상]  ※ 접근·인프라는 권역평가와 중복이라 제외
+      const HEX_AXES = ["수요", "면적", "지형", "사업성", "지목", "형상"];
       const SELECTED = [
-        { pnu: "5123010500100570000", name: "당저동 57",    ha: 2.53, total: 82.5, jimok: "학교용지", program: "국제학교 코어",        cluster: "core",   scores: [5.0, 4.0, 4.0, 4.75, 4.5, 2.5] },
-        { pnu: "5123012000101240000", name: "남양동 124",   ha: 1.89, total: 78.3, jimok: "학교용지", program: "아레나·50m 수영장",     cluster: "core",   scores: [3.73, 4.0, 4.0, 4.75, 4.5, 2.5] },
-        { pnu: "5123010500100960000", name: "당저동 96",    ha: 2.01, total: 78.3, jimok: "학교용지", program: "생활관·기숙·식당",      cluster: "core",   scores: [3.73, 4.0, 4.0, 4.75, 4.5, 2.5] },
-        { pnu: "5123012500104730000", name: "정상동 473",   ha: 2.37, total: 78.3, jimok: "대지(상업)", program: "생활체육·웰니스(개방)", cluster: "core",   scores: [3.73, 4.0, 4.0, 4.75, 4.5, 2.5] },
-        { pnu: "5123012500103770000", name: "정상동 377",   ha: 2.56, total: 75.8, jimok: "대지(나대지)", program: "전문훈련·R&D·창업",   cluster: "core",   scores: [5.0, 4.0, 4.0, 4.75, 2.5, 2.5] },
-        { pnu: "5123012600100410186", name: "정하동 41-186", ha: 1.97, total: 74.7, jimok: "잡종지",   program: "체류·전지훈련·야외",    cluster: "expand", scores: [3.40, 4.0, 4.0, 3.5, 4.5, 3.0] }
+        { pnu: "5123010500100570000", name: "당저동 57",    ha: 2.53, total: 82.5, jimok: "학교용지", program: "국제학교 코어",        cluster: "core",   scores: [5.0, 4.0, 4.0, 2.5, 5.0, 4.25] },
+        { pnu: "5123012000101240000", name: "남양동 124",   ha: 1.89, total: 78.3, jimok: "학교용지", program: "아레나·50m 수영장",     cluster: "core",   scores: [3.73, 4.0, 4.0, 2.5, 5.0, 4.25] },
+        { pnu: "5123010500100960000", name: "당저동 96",    ha: 2.01, total: 78.3, jimok: "학교용지", program: "생활관·기숙·식당",      cluster: "core",   scores: [3.73, 4.0, 4.0, 2.5, 5.0, 4.25] },
+        { pnu: "5123012500104730000", name: "정상동 473",   ha: 2.37, total: 78.3, jimok: "대지(상업)", program: "생활체육·웰니스(개방)", cluster: "core",   scores: [3.73, 4.0, 4.0, 2.5, 4.5, 4.75] },
+        { pnu: "5123012500103770000", name: "정상동 377",   ha: 2.56, total: 75.8, jimok: "대지(나대지)", program: "전문훈련·R&D·창업",   cluster: "core",   scores: [5.0, 4.0, 4.0, 2.5, 3.5, 3.75] },
+        { pnu: "5123012600100410186", name: "정하동 41-186", ha: 1.97, total: 74.7, jimok: "잡종지",   program: "체류·전지훈련·야외",    cluster: "expand", scores: [3.40, 4.0, 4.0, 3.0, 3.5, 4.5] }
       ];
       const CLUSTER_COLOR = { core: "#b41818", expand: "#2f6fab" };
       const SELECTED_PNUS = SELECTED.map((d) => d.pnu);
