@@ -456,6 +456,35 @@
         </div>
       </section>
 
+      <!-- 1C. WORKFLOW OVERVIEW -->
+      <section class="slide">
+        <div class="slide-inner">
+          <div class="kicker">프롤로그 · 작업 과정</div>
+          <h2>결과 이전에 ‘과정’이 있다 — 원자료에서 결론까지 5단계 데이터 워크플로</h2>
+          <p class="section-note">이 발표의 모든 숫자는 다음 다섯 단계를 거쳐 나왔다. “좋아 보이는 안”을 먼저 그리고 데이터를 끼워 맞춘 게 아니라, <b>원자료 → 가공 → 분석 → 검증 → 산출</b> 순서로 쌓아 올렸다.</p>
+          <div class="stepper" style="grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;">
+            <div class="stp"><b>① 수집</b><span>원천 7종 확보<br>상가·소비·인구·대장·지가·격자·공간레이어</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>② 가공</b><span>원본 미변경<br>`_가공`·GeoJSON으로 분리 생성</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>③ 분석</b><span>격자 채점·AHP 가중치<br>·필지 육각평가</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>④ 검증</b><span>CR&lt;0.1·정규화<br>추정값은 [기획추정] 라벨</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>⑤ 산출</b><span>입지 6필지·마스터플랜<br>·사업성 검증</span></div>
+          </div>
+          <div class="grid-3" style="margin-top:20px;">
+            <div class="card"><strong>무엇으로 분석했나 (도구)</strong><p style="color:var(--ink);font-size:13.5px;line-height:1.6;">· 공간연산·지도: 100m 격자 GIS · MapLibre 3D<br>· 가중치: AHP(Saaty) 쌍대비교 · 고유벡터<br>· 판단: 6인 전문가 <b>페르소나 패널</b>(프롬프트 고정 시뮬레이션)</p></div>
+            <div class="card info"><strong>어떻게 편향을 막았나 (규칙)</strong><p style="color:var(--ink);font-size:13.5px;line-height:1.6;">· 후보지를 먼저 찍지 않고 전역을 같은 점수표로 채점<br>· 모든 페르소나가 같은 데이터 패킷·같은 7기준만 비교<br>· 대형부지는 1차 점수에 섞지 않고 2차 하드필터로 분리</p></div>
+            <div class="card warning"><strong>정직성 원칙</strong><p style="color:var(--ink);font-size:13.5px;line-height:1.6;">· 원본 CSV/XLSX는 절대 덮어쓰지 않음<br>· 추정·벤치마크는 <span class="tag gold">기획추정</span>으로 명시<br>· 카드매출 절대액보다 <b>업종 비중·증감 추세</b>를 신뢰</p></div>
+          </div>
+          <p class="section-note">이 다섯 단계 중 <b>②가공·③분석·④검증</b>이 다음 장부터 이어지는 “과정” 슬라이드들이다. 사업성(미션3)은 이 흐름의 <b>마지막 검증 단계</b>로만 다룬다.</p>
+          <div class="source">출처: 본 프로젝트 데이터 처리 원칙(`_가공` 분리 저장·원본 미변경), `지표.md` AHP, `grid_scores_100m.geojson`, `hex_selected_parcels.geojson`.</div>
+          <div class="phase">PROLOGUE · WORKFLOW</div>
+          <div class="slide-no"></div>
+        </div>
+      </section>
+
       <!-- 2. MISSION INTERPRETATION -->
       <section class="slide">
         <div class="slide-inner">
@@ -509,6 +538,34 @@
           </p>
           <div class="source">출처: 소상공인시장진흥공단, 통계청·통계지리서비스(SGIS), 국토교통부 개별공시지가, 비씨카드 지역소비 추정.</div>
           <div class="phase">기 · SETUP</div>
+          <div class="slide-no"></div>
+        </div>
+      </section>
+
+      <!-- 3B. DATA PROCESSING PIPELINE -->
+      <section class="slide">
+        <div class="slide-inner">
+          <div class="kicker">기(起) · 데이터 가공 과정</div>
+          <h2>원자료는 그대로 두고, 분석용 레이어로 다시 만들었다 — 가공 파이프라인</h2>
+          <p class="section-note">앞 장의 원천 데이터는 바로 쓸 수 없다. CSV·XLSX를 <b>정제 → 좌표화 → 공간결합 → 격자 연산</b> 순으로 가공해 지도에 올릴 수 있는 레이어와 지표로 바꿨다. 아래가 “원자료 → 무엇을 했나 → 무엇이 나왔나”의 전체 경로다.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="width:26%">원천 데이터</th><th>가공 작업</th><th style="width:26%">산출물(가공본)</th></tr></thead>
+              <tbody>
+                <tr><td>상가정보 CSV<br>(삼척·동해 2019·2025)</td><td>업종 표준화 → 헬스·요가·의료·상권 분류 → 좌표 정리</td><td>상권·체육·의료 points GeoJSON</td></tr>
+                <tr><td>건축물대장 23,829동</td><td>주용도·연면적·층수 정리, 대형·활용가능 건물 식별</td><td>buildings.geojson</td></tr>
+                <tr><td>개별공시지가 154,873필지</td><td>후보 권역 필지만 추출 → 단가 비교</td><td>필지 사업성(지가) 입력값</td></tr>
+                <tr><td>지역소비·인구 XLSX</td><td>업종별 매출 비중·증감, 동해 유출액·연령 집계</td><td>문제 진단 수치(유출 1.57억·5060 57.2% 등)</td></tr>
+                <tr><td>위 공간 레이어 종합</td><td>100m 격자 생성 → 거리·반경 공간연산 → 정규화</td><td>grid_scores_100m.geojson (5,600격자)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid-2" style="margin-top:16px;">
+            <div class="card success"><strong>왜 ‘가공본을 따로’ 만들었나</strong><p style="color:var(--ink);font-size:14px;line-height:1.65;">원본을 덮어쓰면 출처 추적이 끊긴다. 그래서 원본 CSV/XLSX는 손대지 않고, 가공 결과만 <b>`_가공` 접미사·GeoJSON</b>으로 분리 저장했다. 모든 지도·점수는 이 가공본에서 나오므로 언제든 원천까지 역추적된다.</p></div>
+            <div class="card warning"><strong>보수적 해석 원칙</strong><p style="color:var(--ink);font-size:14px;line-height:1.65;">인구·소비 절대액은 카드매출 <b>추정치</b>다. 그래서 절대값을 단정하지 않고 <b>업종 간 비중·5년 증감 추세</b>를 신뢰하는 쪽으로 읽었다. 벤치마크로 채운 면적은 뒤에서 <span class="tag gold">기획추정</span>으로 표기한다.</p></div>
+          </div>
+          <div class="source">출처: 소상공인 상가정보·건축물대장·개별공시지가·지역소비/인구 XLSX 원본, 가공본 `_가공`·`*.geojson`. 데이터 처리 원칙(원본 미변경·가공본 분리).</div>
+          <div class="phase">기 · DATA PROCESS</div>
           <div class="slide-no"></div>
         </div>
       </section>
@@ -1475,6 +1532,43 @@
             </div>
           </div>
           <div class="source">출처: 과제 PDF 6대 사용자, `미션1.md` 사용자별 이용 시간 매트릭스(연령 매출·소비 성장·인구 데이터).</div>
+          <div class="phase">미션 2 · 마스터플랜</div>
+          <div class="slide-no"></div>
+        </div>
+      </section>
+
+      <!-- 22B. PLACEMENT DECISION PROCESS -->
+      <section class="slide">
+        <div class="slide-inner">
+          <div class="kicker">미션 2 · 배치 의사결정 과정</div>
+          <h2>필지에 기능을 임의로 얹지 않았다 — 육각 6축을 읽어 기능을 매칭한 규칙</h2>
+          <p class="section-note">다음 장의 배치도가 어떻게 나왔는지를 먼저 보인다. 각 필지의 <b>육각 6축(수요·면적·지형·사업성·지목·형상)</b>에서 가장 강한 축을 읽고, “그 강점에 맞는 기능”을 규칙으로 매칭했다. 같은 규칙을 6필지에 일괄 적용했다.</p>
+          <div class="stepper" style="grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;margin-top:16px;">
+            <div class="stp"><b>① 6축 읽기</b><span>필지별 육각 점수 확인</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>② 강한 축 식별</b><span>수요·지목·지가 중 무엇이 두드러지나</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>③ 기능 매칭</b><span>강점→기능 규칙 적용</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>④ 충돌 점검</b><span>인접·동선·개방/보안 검토</span></div>
+            <div class="arr">▶</div>
+            <div class="stp"><b>⑤ 배치 확정</b><span>다음 장 배치도</span></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="width:30%">읽은 신호(강한 축)</th><th>적용한 배치 규칙</th><th>배정 필지·기능</th></tr></thead>
+              <tbody>
+                <tr><td><b>수요 5.0</b> (최고 집객)</td><td>사람이 가장 많이·자주 오는 자리 → 단지의 얼굴</td><td>당저57 학교 본부 · 정상377 훈련 허브</td></tr>
+                <tr><td><b>지목 = 학교용지</b></td><td>인허가·용도 정합 유리 → 학교·아레나·수영을 도보권에 묶음</td><td>당저57·96, 남양124</td></tr>
+                <tr><td><b>의료근접 상위</b> (배치기준)</td><td>기존 의료에 업혀가는 재활·수중재활 배치</td><td>남양124·정상473 재활</td></tr>
+                <tr><td><b>의료근접 낮음</b></td><td>의료 불필요 기능 배치(낭비 제거)</td><td>정상377 R&amp;D·전문훈련</td></tr>
+                <tr><td><b>사업성 3.0</b>(저지가)+해안+외곽</td><td>넓은 땅 필요·도심 불필요 기능</td><td>정하41-186 체류·전지훈련·야외</td></tr>
+                <tr><td><b>상권 근접</b>+대지 도심접점</td><td>주민이 자주 오는 개방형 기능</td><td>정상473 생활체육·웰니스(개방)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="section-note">즉 배치는 “디자인 직관”이 아니라 <b>필지 데이터 → 규칙 → 기능</b>의 결과다. 같은 의료 신호도 <b>점수가 아니라 배치 기준</b>으로만 재사용해(권역평가와 중복 방지) 재활은 의료 가까운 곳, R&amp;D는 먼 곳에 나눴다. 구체적 배치·향·운영은 다음 두 장에서 필지별로 본다.</p>
+          <div class="source">출처: `hex_selected_parcels.geojson` 6축 점수, 권역 의료·상권 근접도(배치 기준), 2026 개별공시지가, Esri 위성(오십천·해안·나대지), `미션2.md` 4장 배치.</div>
           <div class="phase">미션 2 · 마스터플랜</div>
           <div class="slide-no"></div>
         </div>
