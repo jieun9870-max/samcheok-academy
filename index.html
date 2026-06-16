@@ -985,7 +985,7 @@
           <h2>페르소나의 판단을 숫자로 — 가중치를 만든 ‘실제 입력 행렬’을 펼친다</h2>
           <p class="section-note">앞 장(11B)에서 계산의 <b>의미</b>를 봤다면, 이 장은 그 의미를 만든 <b>실제 입력값</b>이다. 6인 페르소나는 같은 자료 패킷·같은 7지표만 보고 “둘 중 무엇이 몇 배 중요한가”를 1~9 척도로 비교했고, 6인의 판단을 <b>기하평균으로 합쳐 하나의 합의 행렬</b>로 만들었다. 아래가 그 합의 행렬(원본 그대로)이다.</p>
           <p class="section-note" style="margin-top:6px;">지표 ▸ ① 60세+ 거주 · ② 도심 상권 · ③ 보행·교통 · ④ 실내체육 공백 · ⑤ 의료 연계 · ⑥ 소비유출 차단 · ⑦ 대형부지</p>
-          <div class="grid-2" style="margin-top:14px;align-items:start;">
+          <div style="margin-top:14px;">
             <div class="table-wrap" style="margin-top:0;">
               <table style="font-size:12.5px;">
                 <thead><tr><th></th><th class="num">①</th><th class="num">②</th><th class="num">③</th><th class="num">④</th><th class="num">⑤</th><th class="num">⑥</th><th class="num">⑦</th></tr></thead>
@@ -1000,29 +1000,7 @@
                 </tbody>
               </table>
               <p class="section-note" style="margin-top:8px;"><b>한 칸 읽는 법</b> ▸ 행이 열보다 몇 배 중요한가. 예) ①행 ⑦열 = <b>5</b> → “거주수요(60세+)가 대형부지보다 5배 중요”. 1보다 작으면(예 ⑦행 ①열 = 1/5) 덜 중요. 대각선은 자기 자신이라 모두 1.</p>
-            </div>
-            <div>
-              <div class="card">
-                <strong>① 어느 페르소나가 어느 칸을 올렸나 (학습 방식의 결과)</strong>
-                <div class="table-wrap" style="margin-top:10px;">
-                  <table style="font-size:12.5px;">
-                    <thead><tr><th>페르소나</th><th>밀어 올린 지표</th></tr></thead>
-                    <tbody>
-                      <tr><td>노인복지·보건</td><td>① 60세+ · ⑤ 의료</td></tr>
-                      <tr><td>도시계획·재생</td><td>② 상권·중심성 (⑦ 부지는 분리)</td></tr>
-                      <tr><td>체육진흥</td><td>④ 실내체육 공백</td></tr>
-                      <tr><td>관광경제</td><td>⑥ 소비유출 차단</td></tr>
-                      <tr><td>주민대표</td><td>③ 보행·개방성</td></tr>
-                      <tr><td>재정·투자</td><td>⑦ 고지가 대면적 배제(하드제약)</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-                <p class="section-note" style="margin-top:8px;">‘학습’ = 새 모델 훈련이 아니라, 각 역할에 <b>같은 자료 패킷·같은 7지표·고정 판단규칙</b>을 주입한 프롬프트 시뮬레이션. 그래서 ①②가 행렬 상단을 차지하고 ⑦이 바닥에 깔린다.</p>
-              </div>
-              <div class="card success" style="margin-top:12px;">
-                <strong>② 행렬 → 고유벡터 → 가중치 → 일관성</strong>
-                <p style="color:var(--ink);font-size:13px;line-height:1.6;">위 합의 행렬의 <b>고유벡터</b>를 구하면 7지표 가중치가 나온다: ① 26.0 · ② 22.7 · ④ 14.7 · ③ 13.3 · ⑥ 9.7 · ⑤ 8.8 · ⑦ 4.8%. 검증: <b>λmax 7.0836 → CI 0.01394 ÷ RI 1.32 = CR 0.01056 &lt; 0.10</b> → 6인 판단이 앞뒤로 모순되지 않음.</p>
-              </div>
+              <p class="section-note" style="margin-top:8px;">이 합의 행렬의 고유벡터가 곧 7지표 가중치이며, <b>다음 장에서 6개 페르소나별 가중치로 풀어 그 기하평균이 이 값으로 닫히는 것</b>을 보인다. (페르소나별 강조·일관성 검증은 다음 장)</p>
             </div>
           </div>
           <div class="source">출처: `미션1.md` 5-2~5-3 가상 전문가 패널·AHP 쌍대비교 행렬(원본 7×7)·고유벡터·일관성, `지표.md` 7지표 가중치. ※ 6인 개별 행렬이 아닌 기하평균 합의 행렬이며, AI 구성 가상 패널 시뮬레이션(실제 채택 전 현장 AHP 설문 검증 필요).</div>
