@@ -1031,6 +1031,54 @@
         </div>
       </section>
 
+      <!-- 11E. PER-PERSONA AHP WEIGHTS -->
+      <section class="slide">
+        <div class="slide-inner">
+          <div class="kicker">승(承) · 페르소나별 AHP 결과</div>
+          <h2>여섯 AI 페르소나가 각자 매긴 점수 — 그 기하평균이 우리의 가중치다</h2>
+          <p class="section-note">6개 전문가 AI 페르소나를 각각 구성하고(역할·자료 패킷·판단규칙 고정), <b>각 페르소나가 7지표를 1~9 척도로 쌍대비교</b>해 자기 가중치를 냈다. 그 6벌의 가중치를 <b>기하평균으로 합치면 우리가 설정한 합의 가중치</b>가 된다. 아래 표가 그 결과다 — 각 열을 정규화(합 100%)했고, <b>맨 오른쪽 기하평균이 곧 발표 전체에 쓰는 가중치</b>다.</p>
+          <div class="table-wrap">
+            <table style="font-size:12.5px;">
+              <thead><tr><th>지표</th><th class="num">노인복지</th><th class="num">도시계획</th><th class="num">체육진흥</th><th class="num">관광경제</th><th class="num">재정투자</th><th class="num">주민대표</th><th class="num">기하평균(정규화)</th><th class="num">배점</th></tr></thead>
+              <tbody>
+                <tr class="peak"><td><b>① 60세+ 거주</b></td><td class="num"><b>36.2</b></td><td class="num">22.9</td><td class="num">23.8</td><td class="num">23.0</td><td class="num">23.4</td><td class="num">26.4</td><td class="num"><b>26.0%</b></td><td class="num">25</td></tr>
+                <tr class="win"><td><b>② 도심 상권</b></td><td class="num">18.1</td><td class="num"><b>28.9</b></td><td class="num">20.0</td><td class="num">24.5</td><td class="num">24.1</td><td class="num">20.1</td><td class="num"><b>22.7%</b></td><td class="num">23</td></tr>
+                <tr><td><b>③ 보행·교통</b></td><td class="num">11.9</td><td class="num">13.3</td><td class="num">12.0</td><td class="num">11.6</td><td class="num">12.5</td><td class="num"><b>18.1</b></td><td class="num"><b>13.3%</b></td><td class="num">13</td></tr>
+                <tr><td><b>④ 실내체육 공백</b></td><td class="num">11.3</td><td class="num">13.4</td><td class="num"><b>22.2</b></td><td class="num">13.5</td><td class="num">14.5</td><td class="num">14.0</td><td class="num"><b>14.7%</b></td><td class="num">15</td></tr>
+                <tr><td><b>⑤ 의료 연계</b></td><td class="num"><b>12.1</b></td><td class="num">7.3</td><td class="num">8.4</td><td class="num">7.7</td><td class="num">8.7</td><td class="num">8.4</td><td class="num"><b>8.8%</b></td><td class="num">9</td></tr>
+                <tr><td><b>⑥ 소비유출 차단</b></td><td class="num">7.0</td><td class="num">8.8</td><td class="num">9.2</td><td class="num"><b>15.0</b></td><td class="num">10.1</td><td class="num">8.8</td><td class="num"><b>9.7%</b></td><td class="num">10</td></tr>
+                <tr><td><b>⑦ 대형부지</b></td><td class="num">3.4</td><td class="num">5.4</td><td class="num">4.5</td><td class="num">4.8</td><td class="num"><b>6.7</b></td><td class="num">4.2</td><td class="num"><b>4.8%</b></td><td class="num">5</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid-2" style="margin-top:16px;align-items:start;">
+            <div class="card">
+              <strong>각 페르소나의 ‘서명’ — 자기 역할이 가장 강한 칸</strong>
+              <div class="table-wrap" style="margin-top:10px;">
+                <table style="font-size:12.5px;">
+                  <thead><tr><th>페르소나</th><th>가장 높게 준 지표</th></tr></thead>
+                  <tbody>
+                    <tr><td>노인복지·보건</td><td>① 60세+ (36.2) · ⑤ 의료 최고</td></tr>
+                    <tr><td>도시계획·재생</td><td>② 상권·중심성 (28.9)</td></tr>
+                    <tr><td>체육진흥</td><td>④ 실내체육 공백 (22.2)</td></tr>
+                    <tr><td>관광경제</td><td>⑥ 소비유출 차단 (15.0)</td></tr>
+                    <tr><td>재정·투자</td><td>⑦ 부지 실현가능성 (6.7)</td></tr>
+                    <tr><td>주민대표</td><td>③ 보행·개방성 (18.1)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card success">
+              <strong>왜 기하평균이 정확히 합의값이 되나</strong>
+              <p style="color:var(--ink);font-size:13.5px;line-height:1.65;">6개 열의 <b>기하평균을 정규화하면 ① 26.0 · ② 22.7 · ③ 13.3 · ④ 14.7 · ⑤ 8.8 · ⑥ 9.7 · ⑦ 4.8%</b> — 앞서 쌍대비교 행렬의 고유벡터로 얻은 그 값과 정확히 일치한다. 즉 “여섯 전문가의 서로 다른 시각 → 한 합의”가 수치로 닫힌다. 이 합의 가중치가 <b>CR 0.01056</b>으로 일관성 검증을 통과한 값이다.</p>
+            </div>
+          </div>
+          <div class="source">출처: 6개 AI 전문가 페르소나의 개별 AHP 쌍대비교 가중치(역할별 강조 반영), 6인 기하평균 집계 → `미션1.md` 5-3 합의 가중치·CR 0.01056로 수렴. AI 구성 가상 패널 시뮬레이션(현실 설문 아님).</div>
+          <div class="phase">승 · AHP PANEL</div>
+          <div class="slide-no"></div>
+        </div>
+      </section>
+
       <!-- 12B. SCORE PIPELINE -->
       <section class="slide">
         <div class="slide-inner">
